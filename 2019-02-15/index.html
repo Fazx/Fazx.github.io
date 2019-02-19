@@ -15,21 +15,21 @@
 
 
 
-<meta name="description" content="‮">
+<meta name="description" content="开篇推荐：  xxelab - 一个包含php,java,python,C#等各种语言版本的XXE漏洞Demo   xxeserver - XXE Out of Band Server.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XML外部实体注入(XXE攻击)小结">
 <meta property="og:url" content="0sec.com.cn/2019-02-15/index.html">
 <meta property="og:site_name" content="0sec">
-<meta property="og:description" content="‮">
+<meta property="og:description" content="开篇推荐：  xxelab - 一个包含php,java,python,C#等各种语言版本的XXE漏洞Demo   xxeserver - XXE Out of Band Server.">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g05zpbmlp7j20hr07nwf2.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g061jqr75bj20le07h75x.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g0634209v6j20s709oju7.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g063epky78j20lw0433yl.jpg">
-<meta property="og:updated_time" content="2019-02-18T08:55:59.193Z">
+<meta property="og:updated_time" content="2019-02-19T15:48:14.287Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML外部实体注入(XXE攻击)小结">
-<meta name="twitter:description" content="‮">
+<meta name="twitter:description" content="开篇推荐：  xxelab - 一个包含php,java,python,C#等各种语言版本的XXE漏洞Demo   xxeserver - XXE Out of Band Server.">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g05zpbmlp7j20hr07nwf2.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -269,14 +269,14 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>‮<br><a id="more"></a></p>
-<p>开篇推荐：</p>
+        <p>开篇推荐：</p>
 <blockquote>
 <p><a href="https://github.com/c0ny1/xxe-lab" target="_blank" rel="noopener">xxelab</a> - 一个包含php,java,python,C#等各种语言版本的XXE漏洞Demo</p>
 </blockquote>
 <blockquote>
 <p><a href="https://github.com/joernchen/xxeserve" target="_blank" rel="noopener">xxeserver</a> - XXE Out of Band Server.</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="DTD"><a href="#DTD" class="headerlink" title="DTD"></a>DTD</h3><blockquote>
 <p>文档类型定义(Document Type Defination)</p>
 </blockquote>
@@ -321,7 +321,7 @@
 <p>根据<a href="https://xz.aliyun.com/t/2571" target="_blank" rel="noopener">https://xz.aliyun.com/t/2571</a>，XML外部实体的解析与PHP版本无关，而与编译时的libxml库有关，在我的环境里libXML的版本为2.9.1</p>
 <p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g063epky78j20lw0433yl.jpg" alt=""></p>
 <p>猜测由于查到的资料都比较老旧，新版的环境已经默认不支持DTD外部实体的引用，或做了某些限制。</p>
-<p>测试暂时失败了，不过如上的任意文件读取就是XXE漏洞最简单的利用方式。根据chebyta的文章，读取php、html等文件时由于尖括号<code>&lt;&gt;</code>会导致解析错误，可以用伪协议的方式进行base64转换：</p>
+<p>测试暂时失败了，不过如上的任意文件读取就是XXE漏洞最简单的利用方式。根据chybeta的文章，读取php、html等文件时由于尖括号<code>&lt;&gt;</code>会导致解析错误，可以用伪协议的方式进行base64转换：</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="utf-8"?></span>
 <span class="token doctype">&lt;!DOCTYPE root [&lt;!ENTITY  file SYSTEM "php://filter/convert.base64-encode/resource=index.php"></span>]>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>root</span><span class="token punctuation">></span></span><span class="token entity" title="&file;">&amp;file;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>root</span><span class="token punctuation">></span></span>
@@ -409,7 +409,7 @@ xmlData <span class="token operator">=</span> etree<span class="token punctuatio
 <h3 id="过滤"><a href="#过滤" class="headerlink" title="过滤"></a>过滤</h3><p>…</p>
 <p>参考链接：</p>
 <p><a href="https://security.tencent.com/index.php/blog/msg/69" target="_blank" rel="noopener">TSRC</a></p>
-<p><a href="https://chybeta.github.io/2017/07/04/%E5%B0%8F%E8%AF%95XML%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/" target="_blank" rel="noopener">chebyta</a></p>
+<p><a href="https://chybeta.github.io/2017/07/04/%E5%B0%8F%E8%AF%95XML%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%94%BB%E5%87%BB/" target="_blank" rel="noopener">chybeta</a></p>
 
       
     </div>
