@@ -15,22 +15,26 @@
 
 
 
-<meta name="description" content="仅供技术探讨">
+<meta name="description" content="-">
+<meta name="keywords" content="CodeAudit,php">
 <meta property="og:type" content="article">
-<meta property="og:title" content="校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)">
-<meta property="og:url" content="0sec.com.cn/2018-08-05/index.html">
+<meta property="og:title" content="WordPress 5.1.1 CSRF to RCE 跟进分析">
+<meta property="og:url" content="0sec.com.cn/2019-03-20/index.html">
 <meta property="og:site_name" content="0sec">
-<meta property="og:description" content="仅供技术探讨">
+<meta property="og:description" content="-">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fus1l2czftj20sb0be7a9.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fus2azy7nkj20x305ymxg.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fus2scu63ij21hc07gjxv.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fus2rdqyvjj22ps0u0hdu.jpg">
-<meta property="og:updated_time" content="2018-09-12T12:27:11.115Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19am91s9qj20xy07pabu.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19bsrw6jbj20t20d70vn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19dtd3y5pj20v7069q4h.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19fbhs8f0j20iy03xdg8.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19ed4r88uj20m606lwfu.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19ewx8yn5j20s50d7jtz.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19n0y2dzij20ra08q74w.jpg">
+<meta property="og:updated_time" content="2019-03-20T14:43:31.677Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)">
-<meta name="twitter:description" content="仅供技术探讨">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fus1l2czftj20sb0be7a9.jpg">
+<meta name="twitter:title" content="WordPress 5.1.1 CSRF to RCE 跟进分析">
+<meta name="twitter:description" content="-">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g19am91s9qj20xy07pabu.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -62,7 +66,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6) | 0sec</title>
+<title>WordPress 5.1.1 CSRF to RCE 跟进分析 | 0sec</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -221,11 +225,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-校园网免流攻略" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-WordPress-5-1-1-CSRF-to-RCE-跟进分析" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018-08-05/" class="article-date">
-      <time datetime="2018-08-05T06:38:38.000Z" itemprop="datePublished">2018-08-05</time>
+      <a href="/2019-03-20/" class="article-date">
+      <time datetime="2019-03-20T14:39:42.000Z" itemprop="datePublished">2019-03-20</time>
 </a>
 
 
@@ -240,7 +244,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)
+      WordPress 5.1.1 CSRF to RCE 跟进分析
     </h1>
   
 
@@ -250,6 +254,10 @@
         
 
         
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CodeAudit-php/">CodeAudit,php</a></li></ul>
+    </div>
+
         <div class="clearfix"></div>
       </div>
       
@@ -257,63 +265,38 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>仅供技术探讨</p>
-<a id="more"></a>
-<h2 id="利用校园网业务逻辑漏洞实现免流"><a href="#利用校园网业务逻辑漏洞实现免流" class="headerlink" title="利用校园网业务逻辑漏洞实现免流"></a>利用校园网业务逻辑漏洞实现免流</h2><p>逻辑漏洞涵盖非常广，它的思路大体都是一个方向，但是具体的实现要因“洞”而异了。</p>
-<p>这里举的是我们学校<a href="https://down.gwifi.com.cn/" target="_blank" rel="noopener">giwifi</a>的例子，由于漏洞在被很多人知道和使用后已经修复，也就不必遮掩了。这个漏洞的出现已经不能说是开发人员的疏忽了，简直就是开发人员为了免费上网而故意留的后门。。。</p>
-<p>移动端Giwifi在连接后需要客户端的登录认证，当未检测到Giwifi客户端时，会自动向<code>http://down.gwifi.com.cn/getApp.htm?os=android</code>这个接口发送请求以下载客户端。几秒钟之内客户端下载完成，若你在这期间进行了抓包或其他访问请求，你会发现所有的请求都是成功的！也就是说，在这几秒钟之内，Giwifi的外网访问是完全开放的。并且此时的Giwifi是不限速的。</p>
-<p>于是利用方法就很简单了：对这个接口不断发送请求，获取开放权限。于是便出现了所谓“三行代码上网法”：</p>
-<pre><code>while True:
-    requests.get(url=&#39;http://down.gwifi.com.cn/getApp.htm?os=android&#39;)
-    time.sleep(10)
-</code></pre><p>如果出现网络不稳定，将延时调低即可。</p>
-<p>防范的方法也很简单(本来也就该这么做</p>
+        <p>-<br><a id="more"></a></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><em>CSRF to RCE</em> 这个标题是原作者在<a href="https://blog.ripstech.com/2019/wordpress-csrf-to-rce/" target="_blank" rel="noopener">博文</a>中的写法，其实颇有些标题党的意味。通篇分析下来我们会发现这个漏洞其实就是一个存储型XSS，而RCE是因为获取管理权限后在WordPress后台可以直接编辑php文件写马，也就能实现RCE…</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>WordPress没有直接对CSRF的防护，而是根据不同的情况进行了不同的过滤。WordPress引入了Nonce安全机制，nonce值与用户的身份以及操作的属性有关，因此不同用户或不同操作都会产生不同的nonce值。比较直观的概括出来就是：</p>
 <ul>
-<li>将客户端放在内网，直接通过内网传输</li>
-<li>过滤请求</li>
+<li>管理员权限+有nonce = 无任何过滤</li>
+<li>管理员权限+无nonce = <code>wp_filter_post_kses()</code>过滤</li>
+<li>普通用户 = <code>wp_filter_kses()</code>过滤</li>
 </ul>
-<h2 id="利用DNS伪装包实现免流"><a href="#利用DNS伪装包实现免流" class="headerlink" title="利用DNS伪装包实现免流"></a>利用DNS伪装包实现免流</h2><blockquote>
-<p>原理：连接校园网后，上网请求会从TCP443端口发出，未登录校园网时请求被拦截。但UDP53端口也就是DNS解析服务所在端口的请求一般不会被拦截，而我们要做的就是将正常的上网请求数据包伪装成DNS数据包，从53端口通过，实现免流上网。</p>
-</blockquote>
-<p>此方法需要</p>
-<ul>
-<li>Windows平台</li>
-<li><a href="https://github.com/alex-sector/dns2tcp" target="_blank" rel="noopener">dns2tcp</a></li>
-<li>一台服务器(140.143.38.75)(过期了就不码了)</li>
-<li>一个可用域名(dust1.top)(懒得码了)</li>
-</ul>
-<h3 id="判断端口是否可用："><a href="#判断端口是否可用：" class="headerlink" title="判断端口是否可用："></a>判断端口是否可用：</h3><p>在<strong>未登录</strong>校园网状态下<strong>清空DNS缓存</strong>并使用<strong>校外</strong>DNS服务器进行nslookup查询。</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fus1l2czftj20sb0be7a9.jpg" alt=""></p>
-<p>如图查询成功，则此方法理论可行。</p>
-<p>接下来进行的操作是：正常的上网请求数据包被伪装成查询dust1.top的DNS请求包，而dust1.top被预先设定了一个NS记录，指定140.143.38.75来进行解析。140.143.38.75中的dns2tcp将伪装的DNS数据包还原成正常的http数据包，获取http响应后再伪装成DNS响应包返回主机，主机上的程序再对它还原，则完成了一次完整的上网操作。</p>
-<p>通过以上的原理介绍，应该可以感觉出这种方法就算可行，速度也会比较慢。但为了技术（免费）还是进行下去了。</p>
-<p>首先要注意服务器的安全组规则，53、80、443端口都不要拦截。</p>
-<p>然后是域名解析记录，如图：</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fus2azy7nkj20x305ymxg.jpg" alt=""></p>
-<p>NS记录指定的域名，A记录中给出IP地址。</p>
-<p>在服务器上安装dns2tcp，编辑/etc/dns2tcpd.conf中<code>listen</code>值为服务器内网IP，<code>domain</code>值为域名。</p>
-<p>服务器执行：</p>
-<pre><code>screen -S dns2tcpd　　　　　　　　　    　 #创建后台会话 
-dns2tcpd -f /etc/dns2tcpd.conf -F -d 2　   　 #启动dns2tcp
-</code></pre><p>Windows本地执行：</p>
-<pre><code>dns2tcpc -r ssh -z dust1.top 140.143.38.75  -l 8888 -d 2
-</code></pre><p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fus2scu63ij21hc07gjxv.jpg" alt=""></p>
-<p>再新建一个本地shell，IP地址127.0.0.1，端口8888 ；然后点击隧道，类型选择socks4/5，端口填1080。</p>
-<p>Internet选项中，依次选择”连接”-&gt;”局域网设置”-&gt;”为LAN使用代理服务器”-&gt;”高级”</p>
-<p>在socks/套接字输入框中，要使用的代理服务器地址填127.0.0.1，端口填1080。</p>
-<p>通过此代理访问网页，shell中出现大量数据包。</p>
-<p>最终效果：</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fus2rdqyvjj22ps0u0hdu.jpg" alt=""></p>
-<h2 id="搭建基于Ipv6的Shadowsocks实现免流"><a href="#搭建基于Ipv6的Shadowsocks实现免流" class="headerlink" title="搭建基于Ipv6的Shadowsocks实现免流"></a>搭建基于Ipv6的Shadowsocks实现免流</h2><p>Ipv6号称“让地球上每粒沙子都有一个IP地址，<a href="https://zhuanlan.zhihu.com/p/41268584" target="_blank" rel="noopener">这里</a>有一篇科普性的文章。</p>
-<p>从<a href="https://test-ipv6.com/index.html.zh_CN" target="_blank" rel="noopener">这里</a>可以检测你的网络是否接入了IPv6。</p>
-<p>此方法需要：</p>
-<ul>
-<li>校园网本身接入IPv6</li>
-<li>一台支持IPv6连接的vps</li>
-<li>shadowsocks</li>
-</ul>
-<p>这种方法所谓的免流，其实就是部分校园网走IPv6协议时流量不计费。所以你需要做的只是在服务器上配置好基于IPv6的ss，方法和普通的ss配置大同小异。</p>
-<p>需要注意的是，即使ss开启全局代理，也不是所有的应用流量都会经过代理。</p>
+<p>关于nonce检验的关键代码在<code>/wp-includes/comment.php</code>第3240行，<code>wp_handle_comment_submission()</code>函数中：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19am91s9qj20xy07pabu.jpg" alt=""></p>
+<p>当创建评论的是具备<code>unfiltered_html</code>属性的管理员且nonce值正确时，不做任何处理；当nonce校验失败后，进入<code>kses_init_filters()</code>函数：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19bsrw6jbj20t20d70vn.jpg" alt=""></p>
+<p>发现nonce校验失败则添加<code>wp_filter_post_kses()</code>过滤器来过滤评论，否则使用<code>wp_filter_kses()</code>过滤。而两者的严格程度不同：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19dtd3y5pj20v7069q4h.jpg" alt=""></p>
+<p>此处可以看到传入的第二参数不同，来看看<code>wp_filter_kses()</code>的<code>current_filter()</code>：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19fbhs8f0j20iy03xdg8.jpg" alt=""></p>
+<p>跟进<code>$wp_current_filter()</code>：</p>
+<pre class=" language-php"><code class="language-php"><span class="token comment" spellcheck="true">//comment.php:1943</span>
+<span class="token keyword">function</span> <span class="token function">wp_filter_comment</span><span class="token punctuation">(</span> <span class="token variable">$commentdata</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token function">isset</span><span class="token punctuation">(</span> <span class="token variable">$commentdata</span><span class="token punctuation">[</span><span class="token string">'user_ID'</span><span class="token punctuation">]</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    <span class="token variable">$commentdata</span><span class="token punctuation">[</span><span class="token string">'comment_content'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">apply_filters</span><span class="token punctuation">(</span> <span class="token string">'pre_comment_content'</span><span class="token punctuation">,</span> <span class="token variable">$commentdata</span><span class="token punctuation">[</span><span class="token string">'comment_content'</span><span class="token punctuation">]</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>pre_comment_content</code>会为<code>&lt;a&gt;</code>标签中的<code>rel</code>属性添加<code>nofollow</code>属性值。注意以上这部分说的是<code>wp_filter_kses()</code>函数，而<code>wp_filter_post_kses()</code>函数会完全保留<code>&lt;a&gt;</code>标签中的<code>rel</code>属性。接下来，WordPress为适配SEO会将<code>&lt;a&gt;</code>标签的属性解析成一个关联数组：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19ed4r88uj20m606lwfu.jpg" alt=""></p>
+<p>之后再将原本的<code>&lt;a&gt;</code>标签拼接起来：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19ewx8yn5j20s50d7jtz.jpg" alt=""></p>
+<p>当我们设置<code>&lt;a&gt;</code>标签中的<code>title=&#39;XSS &quot; onmouseover=alert(1) id=&quot;&#39;</code>时，有<code>$name</code>值为<code>title</code>，<code>$value</code>值为<code>XSS &quot; onmouseover=alert(1) id=&quot;</code>，拆分到数组中再拼接到<code>$html</code>，则</p>
+<p><code>$html</code> = <code>title=&quot;XSS &quot; onmouseover=alert(1) id=&quot;&quot;</code></p>
+<p>则返回的是<code>&lt;a title=&quot;XSS&quot; onmouseover=alert(1) id=&quot;&quot; rel=\&quot;$rel\&quot;&gt;</code></p>
+<p>这样也就实现了基于事件的存储型XSS攻击(不论<code>rel</code>属性值是否被修改)，我们可以执行任意JS脚本的攻击，对管理员的触发请求进行伪造即完成了原文所谓的CSRF，而伪造管理员身份写php文件也就能成功getshell，完成RCE。</p>
+<h2 id="修复"><a href="#修复" class="headerlink" title="修复"></a>修复</h2><p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g19n0y2dzij20ra08q74w.jpg" alt=""></p>
 
       
     </div>
@@ -325,16 +308,10 @@ dns2tcpd -f /etc/dns2tcpd.conf -F -d 2　   　 #启动dns2tcp
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018-08-30/">
-                    区块链基础[待补充]
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018-07-11/">
-                    基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造
+                <a href="/2019-02-15/">
+                    XML外部实体注入(XXE攻击)小结
                 </a>
             </div>
         
@@ -346,7 +323,7 @@ dns2tcpd -f /etc/dns2tcpd.conf -F -d 2　   　 #启动dns2tcp
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用校园网业务逻辑漏洞实现免流"><span class="toc-number">1.</span> <span class="toc-text">利用校园网业务逻辑漏洞实现免流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用DNS伪装包实现免流"><span class="toc-number">2.</span> <span class="toc-text">利用DNS伪装包实现免流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#判断端口是否可用："><span class="toc-number">2.1.</span> <span class="toc-text">判断端口是否可用：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#搭建基于Ipv6的Shadowsocks实现免流"><span class="toc-number">3.</span> <span class="toc-text">搭建基于Ipv6的Shadowsocks实现免流</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分析"><span class="toc-number">2.</span> <span class="toc-text">分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修复"><span class="toc-number">3.</span> <span class="toc-text">修复</span></a></li></ol>
         
     </div>
     <style>
@@ -382,7 +359,7 @@ dns2tcpd -f /etc/dns2tcpd.conf -F -d 2　   　 #启动dns2tcp
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)　| 0sec　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"WordPress 5.1.1 CSRF to RCE 跟进分析　| 0sec　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -402,15 +379,13 @@ dns2tcpd -f /etc/dns2tcpd.conf -F -d 2　   　 #启动dns2tcp
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018-08-30/" title="上一篇: 区块链基础[待补充]">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018-07-11/" title="下一篇: 基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造">
+            <a href="/2019-02-15/" title="下一篇: XML外部实体注入(XXE攻击)小结">
                 <i class="fa fa-angle-right"></i>
             </a>
         
