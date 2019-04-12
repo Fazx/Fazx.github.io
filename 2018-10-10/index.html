@@ -19,7 +19,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="环境配置记录">
 <meta property="og:url" content="0sec.com.cn/2018-10-10/index.html">
-<meta property="og:site_name" content="0sec">
+<meta property="og:site_name" content="Cosmic Fragments">
 <meta property="og:description" content="关于环境配置的问题总是层出不穷的，本文目的是整理最佳解决方法，避免再次踩坑。为防止网上原文遗失记录主要步骤。谷歌是最好的帮手。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fyft42gnlnj20oe09hjso.jpg">
@@ -31,7 +31,8 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fx0xb3014aj20m70hngmb.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fx0xdj5szkj20m80c5ab7.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fx0xe77zwgj210h0l2my1.jpg">
-<meta property="og:updated_time" content="2019-02-14T08:56:15.752Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g102jwbo1pj20rg0ietaf.jpg">
+<meta property="og:updated_time" content="2019-03-21T04:42:52.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="环境配置记录">
 <meta name="twitter:description" content="关于环境配置的问题总是层出不穷的，本文目的是整理最佳解决方法，避免再次踩坑。为防止网上原文遗失记录主要步骤。谷歌是最好的帮手。">
@@ -40,7 +41,7 @@
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
 
-    <link rel="alternate" href="/atom.xml" title="0sec" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="Cosmic Fragments" type="application/atom+xml">
 
 
 
@@ -67,7 +68,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>环境配置记录 | 0sec</title>
+<title>环境配置记录 | Cosmic Fragments</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -124,7 +125,7 @@
         </hgroup>
 
         
-        <p class="header-subtitle">不能改变的洞察毫无意义</p>
+        <p class="header-subtitle">我们大多数人并不真正聪明，只是擅长记忆聪明人说过的话语</p>
         
 
         
@@ -197,7 +198,7 @@
               <h1 class="header-author"><a href="/" title="回到主页">Fazx</a></h1>
             </hgroup>
             
-            <p class="header-subtitle">不能改变的洞察毫无意义</p>
+            <p class="header-subtitle">我们大多数人并不真正聪明，只是擅长记忆聪明人说过的话语</p>
             
             <nav class="header-menu">
                 <ul>
@@ -375,6 +376,24 @@ sudo systemctl restart apache2<span class="token punctuation">.</span>service
 <span class="token shell-comment comment">#切换 CLI </span>
 sudo update<span class="token operator">-</span>alternatives <span class="token operator">--</span>set php <span class="token operator">/</span>usr<span class="token operator">/</span>bin<span class="token operator">/</span>php5<span class="token number">.6</span>
 </code></pre>
+<h2 id="burp返回包乱码"><a href="#burp返回包乱码" class="headerlink" title="burp返回包乱码"></a>burp返回包乱码</h2><p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g102jwbo1pj20rg0ietaf.jpg" alt=""></p>
+<h2 id="Docker中科大源"><a href="#Docker中科大源" class="headerlink" title="Docker中科大源"></a>Docker中科大源</h2><pre><code>curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+    &quot;deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu \
+    $(lsb_release -cs) \
+    stable&quot;
+
+sudo apt-get update
+
+sudo apt-get install docker-ce
+</code></pre><h2 id="Docker-compose"><a href="#Docker-compose" class="headerlink" title="Docker compose"></a><a href="https://docs.docker.com/compose/install/#install-compose" target="_blank" rel="noopener">Docker compose</a></h2><pre><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose
+
+# 最新版本从https://github.com/docker/compose/releases
+
+sudo chmod +x /usr/local/bin/docker-compose
+</code></pre><h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><p>sudo apt-get remove vim-common</p>
+<p>sudo apt-get install vim</p>
 
       
     </div>
@@ -407,7 +426,7 @@ sudo update<span class="token operator">-</span>alternatives <span class="token 
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA解题环境配置"><span class="toc-number">1.</span> <span class="toc-text">RSA解题环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装pycrypto报错unable-to-find-vcvarsall-bat"><span class="toc-number">1.1.</span> <span class="toc-text">安装pycrypto报错unable to find vcvarsall.bat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gmpy2安装"><span class="toc-number">1.2.</span> <span class="toc-text">gmpy2安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#winrandom"><span class="toc-number">1.3.</span> <span class="toc-text">winrandom</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vmware配置虚拟机静态IP-Ubuntu为例"><span class="toc-number">2.</span> <span class="toc-text">Vmware配置虚拟机静态IP(Ubuntu为例)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAMP环境配置（以Ubuntu16-04-LTS为例）"><span class="toc-number">3.</span> <span class="toc-text">LAMP环境配置（以Ubuntu16.04 LTS为例）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angr安装-符号执行"><span class="toc-number">4.</span> <span class="toc-text">angr安装(符号执行)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-bash-上传新项目"><span class="toc-number">5.</span> <span class="toc-text">git bash 上传新项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-撤销修改-版本回退"><span class="toc-number">6.</span> <span class="toc-text">git 撤销修改/版本回退</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销修改"><span class="toc-number">6.1.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本回退"><span class="toc-number">6.2.</span> <span class="toc-text">版本回退</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VNC访问Ubuntu-16-04"><span class="toc-number">7.</span> <span class="toc-text">VNC访问Ubuntu 16.04</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-Could-not-get-lock-var-lib-dpkg-lock"><span class="toc-number">8.</span> <span class="toc-text">Ubuntu:Could not get lock /var/lib/dpkg/lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu更换PHP启用版本"><span class="toc-number">9.</span> <span class="toc-text">Ubuntu更换PHP启用版本</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RSA解题环境配置"><span class="toc-number">1.</span> <span class="toc-text">RSA解题环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装pycrypto报错unable-to-find-vcvarsall-bat"><span class="toc-number">1.1.</span> <span class="toc-text">安装pycrypto报错unable to find vcvarsall.bat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gmpy2安装"><span class="toc-number">1.2.</span> <span class="toc-text">gmpy2安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#winrandom"><span class="toc-number">1.3.</span> <span class="toc-text">winrandom</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vmware配置虚拟机静态IP-Ubuntu为例"><span class="toc-number">2.</span> <span class="toc-text">Vmware配置虚拟机静态IP(Ubuntu为例)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAMP环境配置（以Ubuntu16-04-LTS为例）"><span class="toc-number">3.</span> <span class="toc-text">LAMP环境配置（以Ubuntu16.04 LTS为例）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#angr安装-符号执行"><span class="toc-number">4.</span> <span class="toc-text">angr安装(符号执行)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-bash-上传新项目"><span class="toc-number">5.</span> <span class="toc-text">git bash 上传新项目</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#git-撤销修改-版本回退"><span class="toc-number">6.</span> <span class="toc-text">git 撤销修改/版本回退</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#撤销修改"><span class="toc-number">6.1.</span> <span class="toc-text">撤销修改</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#版本回退"><span class="toc-number">6.2.</span> <span class="toc-text">版本回退</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VNC访问Ubuntu-16-04"><span class="toc-number">7.</span> <span class="toc-text">VNC访问Ubuntu 16.04</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-Could-not-get-lock-var-lib-dpkg-lock"><span class="toc-number">8.</span> <span class="toc-text">Ubuntu:Could not get lock /var/lib/dpkg/lock</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu更换PHP启用版本"><span class="toc-number">9.</span> <span class="toc-text">Ubuntu更换PHP启用版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#burp返回包乱码"><span class="toc-number">10.</span> <span class="toc-text">burp返回包乱码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker中科大源"><span class="toc-number">11.</span> <span class="toc-text">Docker中科大源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">12.</span> <span class="toc-text">Docker compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vim"><span class="toc-number">13.</span> <span class="toc-text">vim</span></a></li></ol>
         
     </div>
     <style>
@@ -443,7 +462,7 @@ sudo update<span class="token operator">-</span>alternatives <span class="token 
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"环境配置记录　| 0sec　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"环境配置记录　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -477,7 +496,7 @@ sudo update<span class="token operator">-</span>alternatives <span class="token 
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」一些安全小技巧在生活中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」一些安全小技巧在生活中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
 
 
 
