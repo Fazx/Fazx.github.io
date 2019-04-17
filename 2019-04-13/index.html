@@ -15,17 +15,17 @@
 
 
 
-<meta name="description" content="其实是为迎战第二天英语竞赛而翻译的文章(:з」∠)  原文链接：http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/">
+<meta name="description" content="其实是为迎战第二天英语竞赛而翻译的文章(:з」∠)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="用Origin请求头防御CSRF攻击(译文)">
 <meta property="og:url" content="0sec.com.cn/2019-04-13/index.html">
 <meta property="og:site_name" content="Cosmic Fragments">
-<meta property="og:description" content="其实是为迎战第二天英语竞赛而翻译的文章(:з」∠)  原文链接：http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/">
+<meta property="og:description" content="其实是为迎战第二天英语竞赛而翻译的文章(:з」∠)">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-17T06:43:34.937Z">
+<meta property="og:updated_time" content="2019-04-17T06:47:20.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Origin请求头防御CSRF攻击(译文)">
-<meta name="twitter:description" content="其实是为迎战第二天英语竞赛而翻译的文章(:з」∠)  原文链接：http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/">
+<meta name="twitter:description" content="其实是为迎战第二天英语竞赛而翻译的文章(:з」∠)">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -114,7 +114,7 @@
         </hgroup>
 
         
-        <p class="header-subtitle">我们大多数人并不真正聪明，只是擅长记忆聪明人说过的话语</p>
+        <p class="header-subtitle">我们大多数人并不聪明，只是擅长记忆聪明人说过的话语</p>
         
 
         
@@ -187,7 +187,7 @@
               <h1 class="header-author"><a href="/" title="回到主页">Fazx</a></h1>
             </hgroup>
             
-            <p class="header-subtitle">我们大多数人并不真正聪明，只是擅长记忆聪明人说过的话语</p>
+            <p class="header-subtitle">我们大多数人并不聪明，只是擅长记忆聪明人说过的话语</p>
             
             <nav class="header-menu">
                 <ul>
@@ -252,11 +252,10 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>其实是为迎战第二天英语竞赛而翻译的文章<em>(:з」∠)</em></p>
+        <p>其实是为迎战第二天英语竞赛而翻译的文章<em>(:з」∠)</em><br><a id="more"></a></p>
 <blockquote>
 <p>原文链接：<a href="http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/" target="_blank" rel="noopener">http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/</a></p>
 </blockquote>
-<a id="more"></a>
 <p>HTTP请求中的Origin请求头表示请求的来源，可以对防御跨站请求伪造攻击起到作用。</p>
 <h2 id="跨站请求"><a href="#跨站请求" class="headerlink" title="跨站请求"></a>跨站请求</h2><p>有些跨站请求是正常的，比如从另一个域调用图片等。但你一定不想将包含一些信息的认证请求呈现给另一个域，也就是CSRF。确定哪个页面发出请求对于积极防御CSRF攻击是很有用的，如果一个站点能确定请求来自哪里，它就能过滤请求。Referer头会包含这个信息但它是不可靠的，Origin头才是将这个信息添加到请求的可靠方式。</p>
 <h2 id="Referer请求头"><a href="#Referer请求头" class="headerlink" title="Referer请求头"></a>Referer请求头</h2><p>Referer头是一个较古老的请求头，包含了用户来源URL，当你点击一个链接时，当前页面的URL会被发送到这个链接。也就是说，这可以用于确定用户来自哪里，从而帮助我们阻止跨站请求。然而Referer头存在两个问题。</p>
