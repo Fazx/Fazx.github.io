@@ -15,24 +15,23 @@
 
 
 
-<meta name="description" content="这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。">
-<meta name="keywords" content="Misc">
+<meta name="description" content="About rand() &amp;amp; mt_rand() in PHP.">
+<meta name="keywords" content="php">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从一道取证题目谈NTFS交换数据流">
-<meta property="og:url" content="0sec.com.cn/2018-05-12/index.html">
+<meta property="og:title" content="PHP中的随机数安全问题">
+<meta property="og:url" content="0sec.com.cn/2019-04-07/index.html">
 <meta property="og:site_name" content="Cosmic Fragments">
-<meta property="og:description" content="这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。">
+<meta property="og:description" content="About rand() &amp;amp; mt_rand() in PHP.">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w09pixoj20pf0ctwgm.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7ivv054xj20iw06nt94.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7hr7k6xsj20oy09h0t5.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w1uxzrjj20vw0dl0ws.jpg">
-<meta property="og:updated_time" content="2018-05-24T12:51:50.519Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g1yz5g3keyj20sm0h6dl1.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g1yzlm4zqxj20qn0bcth3.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g1zvhsm380j20wz07eta3.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g1zvewk8unj20gz0gx42b.jpg">
+<meta property="og:updated_time" content="2019-04-17T06:39:28.743Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从一道取证题目谈NTFS交换数据流">
-<meta name="twitter:description" content="这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg">
+<meta name="twitter:title" content="PHP中的随机数安全问题">
+<meta name="twitter:description" content="About rand() &amp;amp; mt_rand() in PHP.">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1g1yz5g3keyj20sm0h6dl1.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -64,7 +63,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>从一道取证题目谈NTFS交换数据流 | Cosmic Fragments</title>
+<title>PHP中的随机数安全问题 | Cosmic Fragments</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -223,11 +222,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-从一道取证题目谈NTFS交换数据流" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-PHP中的随机数安全问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018-05-12/" class="article-date">
-      <time datetime="2018-05-12T06:37:04.000Z" itemprop="datePublished">2018-05-12</time>
+      <a href="/2019-04-07/" class="article-date">
+      <time datetime="2019-04-07T06:27:42.000Z" itemprop="datePublished">2019-04-07</time>
 </a>
 
 
@@ -242,7 +241,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      从一道取证题目谈NTFS交换数据流
+      PHP中的随机数安全问题
     </h1>
   
 
@@ -253,7 +252,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Misc/">Misc</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/php/">php</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -263,41 +262,93 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。<br><a id="more"></a></p>
-<p>磁盘分析的部分很简单，知道vmdk是虚拟磁盘格式即可利用VMware直接映射。</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w09pixoj20pf0ctwgm.jpg" alt=""></p>
-<p>磁盘空间内得到nothing.rar，打开却是空白的nothing.gif。此时需要你很敏锐，意识到以下两个问题：</p>
-<p>1.为什么给的是<strong>rar压缩包</strong>？CTF中大部分见到的都是zip压缩包，虽然由于加密算法的不同rar包的爆破速度远低于zip的爆破速度，但是这道题又没有加密；</p>
-<p>2.查看nothing.gif的基本信息，我们发现GIF图的大小只有3.5KB，但是占用的磁盘空间却达到了44KB，这一点尤为奇怪。</p>
-<p>这就来到了题目的重点，NTFS数据流隐写。注意，它同样能实践于<strong>Web安全及渗透领域</strong>，这点在后文会提到。</p>
-<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>NTFS交换数据流（alternate data streams，简称ADS）是NTFS磁盘格式的一个特性，在NTFS文件系统下每一个文件，都有着<strong>主文件流和非主文件流</strong>，主文件流能够直接看到；而非主文件流寄宿于主文件流中，无法直接读取，这个非主文件流就是NTFS交换数据流。交换数据流的诞生源于Windows系统与苹果的HFS系统的交互需求，NTFS使用交换数据流来存储文件相关元数据等等。</p>
-<p>ADS的作用在于，它允许一个文件携带着附加的信息。例如，IE浏览器下载文件时，会向文件添加一个数据流，标记该文件来源于外部，即带有风险，那么，在用户打开文件时，就会弹出文件警告提示。再如，在网址收藏中，也会附加一个favicon数据流以存放网站图标。</p>
-<p>创建一个数据交换流文件的方法很简单，只需要这样一条命令：</p>
-<pre><code>type &quot;要隐藏的附加文件&quot;&gt;&quot;宿主文件&quot;:&quot;要隐藏的附加文件&quot;
-</code></pre><p>例如在这道题目中，我就是用这样一条命令向ADS中写入了图像文件：</p>
-<pre><code>type &quot;flag.gif&quot; &gt; &quot;nothing.gif&quot;:&quot;flag.gif&quot;
-</code></pre><p>此时需要注意，尽管可以向文本/图像/可执行文件等各类文件类型的ADS中写入数据，但<strong>最好保持宿主文件和附加文件文件类型的一致性</strong>。我第一次尝试是向png附加gif，结果测试发现这种隐写不够隐蔽，可以直接被foremost察觉并分离…</p>
-<p>另一个要点是，你需要用<strong>WinRAR这样支持NTFS数据流的压缩软件</strong>对压缩包进行操作。如果没有了解到这个点，就一直在坑里找路。WinRAR解压缩不会丢失数据流，但是加压缩时不会默认保存数据流，这一点是我反复尝试失败后，去找pcat师傅求助，才知道压缩高级选项中有保存文件流数据的选项：</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7ivv054xj20iw06nt94.jpg" alt=""></p>
-<p>使用WinRAR解压后，我们使用lads.exe执行 /s 递归查询，发现被隐写的flag.gif文件</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7hr7k6xsj20oy09h0t5.jpg" alt=""></p>
-<p>提取数据则可以使用Ntfs Streams Editor</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w1uxzrjj20vw0dl0ws.jpg" alt=""></p>
-<p>导出得到GIF图，分帧即可看到flag。</p>
-<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>这道题目到这里就告一段落了，但是关于NTFS交换数据流的运用还不止如此。</p>
-<p>由于常规的系统命令和文件管理器都检查不到其存在，ADS也被用于<strong>隐藏后门</strong>，大多数防病毒软件默认不会扫描Windows交换数据流，如果启用这个功能，扫描速度会降低90%。隐藏交换数据流还有一个更隐蔽的方式，就是将交换数据流绑定到一个保留设备名中，这样就算使用LDS或streams.exe也无法检测到交换数据流。Windows有很多不应该用作文件名的保留设备名如CON、PRN、COM1、LPT1等等。这些设备名是用来将输出数据发送到周边硬件设备的，但这些保留设备名是“不应该”作为文件名，但并没有禁止使用。</p>
-<p>但是从WindowsXP以后微软就禁止用户从ADS里执行程序了。写入，读出操作都可以，但是不允许执行。可以通过脚本解释器(Wscript.exe)来运行该脚本，详细介绍见</p>
-<p><a href="http://www.freebuf.com/articles/73270.html" target="_blank" rel="noopener">一个用ADS（供选数据流）隐藏Windows后门的方法</a></p>
-<p>在<strong>实战渗透</strong>中也可以利用这种方法隐藏nc，隐藏meterpreter等。</p>
-<p>在<strong>Web安全</strong>方面，涉及到php+Windows+IIS环境的冒号截断绕过黑名单上传，在UDF提权中也有利用：</p>
-<p><a href="https://www.waitalone.cn/php-windows-upload.html" target="_blank" rel="noopener">当php邂逅windows通用上传缺陷</a></p>
-<p><a href="http://www.yunsec.net/a/security/web/jbst/2012/0918/11452.html" target="_blank" rel="noopener">NTFS中的ADS的一些安全问题</a></p>
-<p><strong>此考点出现在了HITB-XCTF 2018的upload一题中。</strong></p>
-<p>参考链接：</p>
-<p><a href="https://www.cnblogs.com/Chesky/p/ALTERNATE_DATA_STREAMS.html" target="_blank" rel="noopener">https://www.cnblogs.com/Chesky/p/ALTERNATE_DATA_STREAMS.html</a></p>
-<p><a href="http://drops.the404.me/1981.html" target="_blank" rel="noopener">http://drops.the404.me/1981.html</a></p>
-<p>《数据隐藏技术揭秘》</p>
+        <p>About <code>rand()</code> &amp; <code>mt_rand()</code> in PHP.<br><a id="more"></a></p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>西湖论剑杯线上预选赛线上赌场一题，明文攻击出来的hint中给了<code>/flag/seed.txt</code>以及一个字符串<code>code</code>，这里需要稍微脑洞一点想到seed是指随机数种子，以及Web页面上的code值是每小时更换的”随机数”：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g1yz5g3keyj20sm0h6dl1.jpg" alt=""></p>
+<p>我们利用<code>php_mt_seed</code>工具(C编写，速度很快)可以根据随机数碰撞出随机数的种子，从而获取flag：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g1yzlm4zqxj20qn0bcth3.jpg" alt=""></p>
+<p>以下是原理分析：</p>
+<hr>
+<h2 id="随机数的安全缺陷"><a href="#随机数的安全缺陷" class="headerlink" title="随机数的安全缺陷"></a>随机数的安全缺陷</h2><p>随机数广泛应用于生成验证码、Token、密钥等场景中，分为<strong>真随机数</strong>和<strong>伪随机数</strong>。我们通过算法(常用线性同余)和种子(常用时钟)得到的随机数属于伪随机数：当知道种子或已产生的随机数时，随机数序列是可以被预测的。</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g1zvhsm380j20wz07eta3.jpg" alt=""></p>
+<p>可以看到PHP Manual其实提示了生成随机数用于加密是不安全的，但是这个<strong>Caution</strong>不知为何只存在于英文版的PHP Manual中，中文版被遗漏了…这可能也是很多国内的开发应用出现过此缺陷的一个原因。</p>
+<p>PHP中生成随机数的函数有<code>rand()</code>和<code>mt_rand()</code>，它们分别对应<code>srand()</code>和<code>mt_strand()</code>两个用于播种随机数种子的函数。我们建立<code>rand.php</code>进行测试：</p>
+<pre class=" language-php"><code class="language-php"><span class="token delimiter">&lt;?php</span>
+<span class="token function">mt_srand</span><span class="token punctuation">(</span><span class="token number">2333</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">srand</span><span class="token punctuation">(</span><span class="token number">2333</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">echo</span> <span class="token string">"seed=2333,rand()产生的随机数序列:\n"</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token variable">$i</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token variable">$i</span><span class="token operator">&lt;=</span><span class="token number">3</span><span class="token punctuation">;</span><span class="token variable">$i</span><span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token keyword">echo</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token string">"\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token keyword">echo</span> <span class="token string">"seed=2333,mt_rand()产生的随机数序列:\n"</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token variable">$i</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token variable">$i</span><span class="token operator">&lt;=</span><span class="token number">3</span><span class="token punctuation">;</span><span class="token variable">$i</span><span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+   <span class="token keyword">echo</span> <span class="token function">mt_rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token string">"\n"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="token delimiter">?></span>
+</code></pre>
+<p>执行：</p>
+<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1g1zvewk8unj20gz0gx42b.jpg" alt=""></p>
+<p>可以看出当随机数种子相同时，不管是<code>rand()</code>还是<code>mt_rand()</code>产生的随机数序列都是相同的，如果seed泄露则会导致随机数序列的泄露。当种子值为固定如<code>mt_srand(1000)</code>时，随机数形同虚设；而使用动态种子也未必安全，如：</p>
+<pre><code>//seed值较小，直接遍历爆破
+mt_srand(mt_rand(0,1000));
+
+//用公开的time()作为种子，和静态种子一样危险
+mt_srand(time());
+//破解时要注意服务器时间可能存在偏差，需要设定一个较小的范围
+</code></pre><p>自PHP 4.2.0 起，随机数发生器会自动完成播种，不再需要手工调用<code>srand()</code>或<code>mt_srand()</code>，但是这样仍旧不安全，我们分别对两个函数进行讨论：</p>
+<h3 id="rand"><a href="#rand" class="headerlink" title="rand()"></a>rand()</h3><p><code>rand()</code>在产生随机数时不会自动调用<code>srand()</code>，产生的随机数序列可以通过这个式子预测：</p>
+<p><code>state[i] = state[i-3] + state[i-31]</code></p>
+<p>所以我们可以收集<code>rand()</code>生成的32位以上的随机序列，以预测后面的随机序列。</p>
+<p>详细参考：<a href="http://www.sjoerdlangkemper.nl/2016/02/11/cracking-php-rand/" target="_blank" rel="noopener">Cracking-Php-Rand</a></p>
+<p>并且在某些平台下<code>rand()</code>最大值为32767，非常容易遭到爆破。</p>
+<h3 id="mt-rand"><a href="#mt-rand" class="headerlink" title="mt_rand()"></a>mt_rand()</h3><p>根据PHP Manual，<code>mt_rand()</code>产生随机数值的平均速度比libc提供的<code>rand()</code>快四倍，<code>rand()</code> 函数默认使用 libc 随机数发生器，<code>mt_rand()</code> 函数是非正式用来替换它的。</p>
+<p><code>mt_rand()</code>函数的安全缺陷主要出现在，所谓”自动播种”其实是PHP在同一个请求进程中只会进行一次播种，也就是说即使多次调用<code>mt_rand()</code>函数，也只会根据第一次播种的种子生成随机数。这一结论的证明可以通过<code>mt_rand()</code>的<a href="https://github.com/php/php-src/blob/e23da65550680230618bc26fb34d19baa89157fe/ext/standard/mt_rand.c" target="_blank" rel="noopener">源码</a>分析或写个小脚本测试来完成，不再展开，函数的核心实现代码是这一部分：</p>
+<pre><code>PHPAPI void php_mt_srand(uint32_t seed)
+{
+    /* Seed the generator with a simple uint32 */
+    php_mt_initialize(seed, BG(state));
+    php_mt_reload();
+
+    /* Seed only once */
+    BG(mt_rand_is_seeded) = 1; 
+}
+/* }}} */
+
+/* {{{ php_mt_rand
+ */
+PHPAPI uint32_t php_mt_rand(void)
+{
+    /* Pull a 32-bit integer from the generator state
+       Every other access function simply transforms the numbers extracted here */
+
+    register uint32_t s1;
+
+    if (UNEXPECTED(!BG(mt_rand_is_seeded))) {
+        php_mt_srand(GENERATE_SEED());
+    }
+
+    if (BG(left) == 0) {
+        php_mt_reload();
+    }
+    --BG(left);
+
+    s1 = *BG(next)++;
+    s1 ^= (s1 &gt;&gt; 11);
+    s1 ^= (s1 &lt;&lt;  7) &amp; 0x9d2c5680U;
+    s1 ^= (s1 &lt;&lt; 15) &amp; 0xefc60000U;
+    return ( s1 ^ (s1 &gt;&gt; 18) );
+}
+</code></pre><p>由于根据种子生成随机数序列的计算并不可逆，有效的破解方法应该是穷举种子并生成随机数序列，与已知的随机数(序列)作比较，这也是文章开头提到的<code>php_mt_seed</code>工具的实现逻辑。</p>
+<h2 id="安全建议"><a href="#安全建议" class="headerlink" title="安全建议"></a>安全建议</h2><p>涉及到加密/权限/CSRF Token等敏感操作时：</p>
+<ul>
+<li>不要使用时间函数作为种子或直接作为随机数：<code>time()</code>/<code>microtime()</code></li>
+<li>不要直接使用<code>rand()`</code>mt_rand()`这样的弱伪随机数生成器</li>
+<li>随机数要足够长以防御暴力破解</li>
+</ul>
+<h2 id="相关题目学习"><a href="#相关题目学习" class="headerlink" title="相关题目学习"></a>相关题目学习</h2><p><a href="http://www.vuln.cn/6004" target="_blank" rel="noopener">0CTF 2016 Rand2</a></p>
+<p><a href="https://www.cnblogs.com/afanti/p/8722760.html" target="_blank" rel="noopener">NJCTF 2017 Guess</a></p>
+<p><a href="https://mp.weixin.qq.com/s/_4Du7aqTHNhS4OArfVGqvw" target="_blank" rel="noopener">Pwnhub会员日一题引发的思考</a></p>
+<h2 id="参考链接："><a href="#参考链接：" class="headerlink" title="参考链接："></a>参考链接：</h2><p><a href="http://wonderkun.cc/index.html/?p=585" target="_blank" rel="noopener">http://wonderkun.cc/index.html/?p=585</a></p>
 
       
     </div>
@@ -310,15 +361,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018-05-14/">
-                    「娱乐向」一些安全小技巧在生活中的应用
+                <a href="/2019-04-13/">
+                    用Origin请求头防御CSRF攻击(译文)
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018-05-10/">
-                    关于Xdebug的那些事儿
+                <a href="/2019-03-20/">
+                    WordPress 5.1.1 CSRF to RCE 跟进分析
                 </a>
             </div>
         
@@ -330,7 +381,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#拓展"><span class="toc-number">2.</span> <span class="toc-text">拓展</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#随机数的安全缺陷"><span class="toc-number">2.</span> <span class="toc-text">随机数的安全缺陷</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rand"><span class="toc-number">2.1.</span> <span class="toc-text">rand()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mt-rand"><span class="toc-number">2.2.</span> <span class="toc-text">mt_rand()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全建议"><span class="toc-number">3.</span> <span class="toc-text">安全建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关题目学习"><span class="toc-number">4.</span> <span class="toc-text">相关题目学习</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考链接："><span class="toc-number">5.</span> <span class="toc-text">参考链接：</span></a></li></ol>
         
     </div>
     <style>
@@ -366,7 +417,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"从一道取证题目谈NTFS交换数据流　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"PHP中的随机数安全问题　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -386,7 +437,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018-05-14/" title="上一篇: 「娱乐向」一些安全小技巧在生活中的应用">
+            <a href="/2019-04-13/" title="上一篇: 用Origin请求头防御CSRF攻击(译文)">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -394,7 +445,7 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018-05-10/" title="下一篇: 关于Xdebug的那些事儿">
+            <a href="/2019-03-20/" title="下一篇: WordPress 5.1.1 CSRF to RCE 跟进分析">
                 <i class="fa fa-angle-right"></i>
             </a>
         
