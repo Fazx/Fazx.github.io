@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="Cosmic Fragments">
 <meta property="og:description" content="这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w09pixoj20pf0ctwgm.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7ivv054xj20iw06nt94.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7hr7k6xsj20oy09h0t5.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w1uxzrjj20vw0dl0ws.jpg">
-<meta property="og:updated_time" content="2018-05-24T12:51:50.519Z">
+<meta property="og:image" content="http://i2.bvimg.com/685636/3052b208d1050e99.jpg">
+<meta property="og:image" content="http://i2.bvimg.com/685636/936ed011cd12d728.jpg">
+<meta property="og:image" content="http://i2.bvimg.com/685636/93d98afb9f91d5d8.jpg">
+<meta property="og:image" content="http://i2.bvimg.com/685636/582f624c18dbeb6b.jpg">
+<meta property="og:image" content="http://i2.bvimg.com/685636/21581751011edea0.jpg">
+<meta property="og:updated_time" content="2019-04-29T12:54:39.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从一道取证题目谈NTFS交换数据流">
 <meta name="twitter:description" content="这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg">
+<meta name="twitter:image" content="http://i2.bvimg.com/685636/3052b208d1050e99.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -265,8 +265,8 @@
           
         <p>这是我出的一道磁盘分析+NTFS数据流隐写的取证题目。<br><a id="more"></a></p>
 <p>磁盘分析的部分很简单，知道vmdk是虚拟磁盘格式即可利用VMware直接映射。</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1vzza21uj20r40b20xy.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w09pixoj20pf0ctwgm.jpg" alt=""></p>
+<p><img src="http://i2.bvimg.com/685636/3052b208d1050e99.jpg" alt=""></p>
+<p><img src="http://i2.bvimg.com/685636/936ed011cd12d728.jpg" alt=""></p>
 <p>磁盘空间内得到nothing.rar，打开却是空白的nothing.gif。此时需要你很敏锐，意识到以下两个问题：</p>
 <p>1.为什么给的是<strong>rar压缩包</strong>？CTF中大部分见到的都是zip压缩包，虽然由于加密算法的不同rar包的爆破速度远低于zip的爆破速度，但是这道题又没有加密；</p>
 <p>2.查看nothing.gif的基本信息，我们发现GIF图的大小只有3.5KB，但是占用的磁盘空间却达到了44KB，这一点尤为奇怪。</p>
@@ -279,11 +279,11 @@
 <pre><code>type &quot;flag.gif&quot; &gt; &quot;nothing.gif&quot;:&quot;flag.gif&quot;
 </code></pre><p>此时需要注意，尽管可以向文本/图像/可执行文件等各类文件类型的ADS中写入数据，但<strong>最好保持宿主文件和附加文件文件类型的一致性</strong>。我第一次尝试是向png附加gif，结果测试发现这种隐写不够隐蔽，可以直接被foremost察觉并分离…</p>
 <p>另一个要点是，你需要用<strong>WinRAR这样支持NTFS数据流的压缩软件</strong>对压缩包进行操作。如果没有了解到这个点，就一直在坑里找路。WinRAR解压缩不会丢失数据流，但是加压缩时不会默认保存数据流，这一点是我反复尝试失败后，去找pcat师傅求助，才知道压缩高级选项中有保存文件流数据的选项：</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7ivv054xj20iw06nt94.jpg" alt=""></p>
+<p><img src="http://i2.bvimg.com/685636/93d98afb9f91d5d8.jpg" alt=""></p>
 <p>使用WinRAR解压后，我们使用lads.exe执行 /s 递归查询，发现被隐写的flag.gif文件</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr7hr7k6xsj20oy09h0t5.jpg" alt=""></p>
+<p><img src="http://i2.bvimg.com/685636/582f624c18dbeb6b.jpg" alt=""></p>
 <p>提取数据则可以使用Ntfs Streams Editor</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1fr1w1uxzrjj20vw0dl0ws.jpg" alt=""></p>
+<p><img src="http://i2.bvimg.com/685636/21581751011edea0.jpg" alt=""></p>
 <p>导出得到GIF图，分帧即可看到flag。</p>
 <h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>这道题目到这里就告一段落了，但是关于NTFS交换数据流的运用还不止如此。</p>
 <p>由于常规的系统命令和文件管理器都检查不到其存在，ADS也被用于<strong>隐藏后门</strong>，大多数防病毒软件默认不会扫描Windows交换数据流，如果启用这个功能，扫描速度会降低90%。隐藏交换数据流还有一个更隐蔽的方式，就是将交换数据流绑定到一个保留设备名中，这样就算使用LDS或streams.exe也无法检测到交换数据流。Windows有很多不应该用作文件名的保留设备名如CON、PRN、COM1、LPT1等等。这些设备名是用来将输出数据发送到周边硬件设备的，但这些保留设备名是“不应该”作为文件名，但并没有禁止使用。</p>
@@ -294,7 +294,7 @@
 <p><a href="https://www.waitalone.cn/php-windows-upload.html" target="_blank" rel="noopener">当php邂逅windows通用上传缺陷</a></p>
 <p><a href="http://www.yunsec.net/a/security/web/jbst/2012/0918/11452.html" target="_blank" rel="noopener">NTFS中的ADS的一些安全问题</a></p>
 <p><strong>此考点出现在了HITB-XCTF 2018的upload一题中。</strong></p>
-<p>参考链接：</p>
+<p>参考：</p>
 <p><a href="https://www.cnblogs.com/Chesky/p/ALTERNATE_DATA_STREAMS.html" target="_blank" rel="noopener">https://www.cnblogs.com/Chesky/p/ALTERNATE_DATA_STREAMS.html</a></p>
 <p><a href="http://drops.the404.me/1981.html" target="_blank" rel="noopener">http://drops.the404.me/1981.html</a></p>
 <p>《数据隐藏技术揭秘》</p>
@@ -311,7 +311,7 @@
         
             <div id="article-nav-newer" class="article-nav-title">
                 <a href="/2018-05-14/">
-                    「娱乐向」一些安全小技巧在生活中的应用
+                    「娱乐向」 Hack for Fun
                 </a>
             </div>
         
@@ -386,7 +386,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018-05-14/" title="上一篇: 「娱乐向」一些安全小技巧在生活中的应用">
+            <a href="/2018-05-14/" title="上一篇: 「娱乐向」 Hack for Fun">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -400,7 +400,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」一些安全小技巧在生活中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
 
 
 

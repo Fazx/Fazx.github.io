@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Cosmic Fragments">
 <meta property="og:description" content="PHP is the best language in the world">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1ftogtt8qcsj216m13gdvk.jpg">
-<meta property="og:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1frbbme35ilj217s0bqdh7.jpg">
-<meta property="og:updated_time" content="2018-07-27T07:46:13.664Z">
+<meta property="og:image" content="http://i1.bvimg.com/685636/4ac6f2d9434c6b70.jpg">
+<meta property="og:image" content="http://i1.bvimg.com/685636/184c432ab8bfb7d8.jpg">
+<meta property="og:updated_time" content="2019-04-29T09:21:06.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP弱类型&amp;&amp;md5碰撞总结">
 <meta name="twitter:description" content="PHP is the best language in the world">
-<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/b12bdb25ly1ftogtt8qcsj216m13gdvk.jpg">
+<meta name="twitter:image" content="http://i1.bvimg.com/685636/4ac6f2d9434c6b70.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -264,9 +264,9 @@
 <blockquote>
 <p>“php提供了很多特性供开发者使用，其中一个就是弱类型机制。它本是想让程序员借由这种不需要声明的体系，更加高效的开发，所以在几乎所有内置函数以及基本结构中使用了很多松散的比较和转换，防止程序中的变量因为程序的不规范而频繁报错。然而这却带来了许多安全问题。”</p>
 </blockquote>
-<h2 id="1-相等比较"><a href="#1-相等比较" class="headerlink" title="1.相等比较"></a>1.相等比较</h2><p>php中有两种比较相等的符号，==和===。</p>
-<p>= = 会先将字符串类型转化成相同再比较;</p>
-<p>= = = 会先判断两种字符串的类型是否相等再比较。</p>
+<h2 id="1-相等比较"><a href="#1-相等比较" class="headerlink" title="1.相等比较"></a>1.相等比较</h2><p>php中有两种比较相等的符号，<code>==</code>和<code>===</code>。</p>
+<p><code>==</code>会先将字符串类型转化成相同再比较;</p>
+<p><code>===</code>会先判断两种字符串的类型是否相等再比较。</p>
 <p>一个数值和字符串进行比较的时候，会字符串转换成数值。</p>
 <p>看示例：</p>
 <pre><code>&lt;?php
@@ -297,9 +297,9 @@ typedef union _zvalue_value {
     HashTable *ht;  /* hash table value */ 
     zend_object_value obj;  
 } zvalue_value;
-</code></pre><p>通过type判断变量类型，存入value，zval.type决定了存储到zval.value的类型。这是php内核中弱类型的封装，也是后续内容的基础。</p>
+</code></pre><p>通过type判断变量类型，存入value，<code>zval.type</code>决定了存储到<code>zval.value</code>的类型。这是php内核中弱类型的封装，也是后续内容的基础。</p>
 <p>所以上述admin被转化为0，1admin转化为1，admin1却被转化为0。字符串的开始部分决定了它的值，如果该字符串以合法的数值开始，则使用该数值，否则其值为0。</p>
-<p>特殊的，0e123456这样的字符串在==比较中会被识别为科学计数法，意为0的123456次幂，故”0e123456”==”0e4456789”==0。</p>
+<p>特殊的，0e123456这样的字符串在<code>==</code>比较中会被识别为科学计数法，意为0的123456次幂，故<code>0e123456==0e4456789==0</code>。</p>
 <p>总的来说，字符串没有包含’.’,’e’,’E’并且其数值值在整形的范围之内<br>该字符串被当作int来取值，其他所有情况下都被作为float来取值。</p>
 <pre><code>&lt;?php
 $test=1 + &quot;10.5&quot;; // $test=11.5(float)
@@ -307,7 +307,7 @@ $test=1+&quot;-1.3e3&quot;; //$test=-1299(float)
 $test=1+&quot;bob-1.3e3&quot;;//$test=1(int)
 ?&gt;
 </code></pre><p>附一个图：</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1ftogtt8qcsj216m13gdvk.jpg" alt=""></p>
+<p><img src="http://i1.bvimg.com/685636/4ac6f2d9434c6b70.jpg" alt=""></p>
 <hr>
 <h2 id="2-Hash比较缺陷-md5绕过"><a href="#2-Hash比较缺陷-md5绕过" class="headerlink" title="2.Hash比较缺陷(md5绕过)"></a>2.Hash比较缺陷(md5绕过)</h2><h3 id="Level-1"><a href="#Level-1" class="headerlink" title="Level 1"></a>Level 1</h3><p>来看这段代码：</p>
 <pre><code>&lt;?php
@@ -365,7 +365,7 @@ else
 echo &quot;Nah... &#39;&quot;,htmlspecialchars($md5),&quot;&#39; not the same as &quot;,md5($md5);
 }
 ?&gt;
-</code></pre><p>显然，此时的参数需要单层md5()与双层md5()后判断==，则我们需要找一个0e开头的纯数字字符串，这个字符串的MD5值依旧是0e开头的。</p>
+</code></pre><p>显然，此时的参数需要单层md5()与双层md5()后判断<code>==</code>，则我们需要找一个0e开头的纯数字字符串，这个字符串的MD5值依旧是0e开头的。</p>
 <p>Python2脚本：</p>
 <pre><code>#!python2
 import hashlib
@@ -393,7 +393,7 @@ if __name__ == &#39;__main__&#39;:
     die(&quot;success!&quot;);
 </code></pre><p>此时为===强类型，md5的结果将不再进行类型转换，直接被当做字符串比较。</p>
 <p>此时利用md5()函数无法处理数组而将其一律置为NULL的特性，利用数组进行绕过。</p>
-<p>POST传参param1[]=1&amp;param2[]=2即可</p>
+<p>POST传参<code>param1[]=1&amp;param2[]=2</code>即可</p>
 <h3 id="Level-4"><a href="#Level-4" class="headerlink" title="Level 4"></a>Level 4</h3><p>2018年强网杯初赛【Web签到】第三关</p>
 <pre><code>if((string)$_POST[&#39;param1&#39;]!==(string)$_POST[&#39;param2&#39;] &amp;&amp; md5($_POST[&#39;param1&#39;])===md5($_POST[&#39;param2&#39;]))
     die(&quot;success!);
@@ -415,7 +415,7 @@ if __name__ == &#39;__main__&#39;:
 <p>文件传递时可使用Burpsuite的paste from files功能。</p>
 <p>字符串传参时要注意不能直接POST参数的值，因为在传递时会被二次url编码，应该进行一次urldecode后再传递。</p>
 <p>如图：</p>
-<p><img src="http://ww1.sinaimg.cn/large/b12bdb25ly1frbbme35ilj217s0bqdh7.jpg" alt=""></p>
+<p><img src="http://i1.bvimg.com/685636/184c432ab8bfb7d8.jpg" alt=""></p>
 <hr>
 <h2 id="JSON比较绕过"><a href="#JSON比较绕过" class="headerlink" title="JSON比较绕过"></a>JSON比较绕过</h2><pre><code>&lt;?php
 
@@ -578,7 +578,7 @@ if __name__ == &#39;__main__&#39;:
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」一些安全小技巧在生活中的应用</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
 
 
 
