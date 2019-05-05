@@ -23,16 +23,16 @@
 <meta property="og:site_name" content="Cosmic Fragments">
 <meta property="og:description" content="本文中两者并没有关系，只是单独发略显单薄…">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://i1.bvimg.com/685636/23d0762a9faa9f6f.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/e98ac09159e54be6.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/8407319cc436885f.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/94293be8c157d0eb.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/e23bcbad3f2df0b7.jpg">
-<meta property="og:updated_time" content="2019-04-30T05:44:42.986Z">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211349.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211406.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211420.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211431.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211448.png">
+<meta property="og:updated_time" content="2019-05-05T13:14:54.824Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Django开发小记 &amp; Docker笔记">
 <meta name="twitter:description" content="本文中两者并没有关系，只是单独发略显单薄…">
-<meta name="twitter:image" content="http://i1.bvimg.com/685636/23d0762a9faa9f6f.jpg">
+<meta name="twitter:image" content="http://0blog.test.upcdn.net/20190505211349.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -263,7 +263,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><img src="http://i1.bvimg.com/685636/23d0762a9faa9f6f.jpg" alt=""><br>本文中两者并没有关系，只是单独发略显单薄…<br><a id="more"></a></p>
+        <p><img src="http://0blog.test.upcdn.net/20190505211349.png" alt=""><br>本文中两者并没有关系，只是单独发略显单薄…<br><a id="more"></a></p>
 <h1 id="Django"><a href="#Django" class="headerlink" title="Django"></a>Django</h1><blockquote>
 <p>文章中所有的<code>{{ }}</code>或<code>{% %}</code>都需要用</p>
 </blockquote>
@@ -275,7 +275,7 @@
 <p>Template render error: tag name expected</p>
 </blockquote>
 <h2 id="生产环境下需要注意的"><a href="#生产环境下需要注意的" class="headerlink" title="生产环境下需要注意的"></a>生产环境下需要注意的</h2><h3 id="环境隔离"><a href="#环境隔离" class="headerlink" title="环境隔离"></a>环境隔离</h3><p>使用<code>virtualenv</code>创建单独的虚拟运行环境，无论是学习开发(<strong>方便管理</strong>)还是在生产环境(<strong>避免依赖冲突</strong>)都是很有必要的。</p>
-<p><img src="http://i1.bvimg.com/685636/e98ac09159e54be6.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211406.png" alt=""></p>
 <h3 id="安全"><a href="#安全" class="headerlink" title="安全"></a>安全</h3><ul>
 <li>关闭DEBUG模式，但需要添加处理404页面</li>
 <li>保护好<code>SECRET_KEY</code>，别直接一股脑都传gayhub了</li>
@@ -300,9 +300,9 @@
 <blockquote>
 <p>每当你修改了models.py文件，都需要用makemigrations和migrate这两条指令迁移数据。</p>
 </blockquote>
-<p><img src="http://i1.bvimg.com/685636/8407319cc436885f.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211420.png" alt=""></p>
 <p>使用<code>python3 manage.py sqlmigrate blog 0001</code>可以将数据库的迁移文件转换成SQL语句查看。</p>
-<p><img src="http://i1.bvimg.com/685636/94293be8c157d0eb.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211431.png" alt=""></p>
 <h3 id="Django-Filter"><a href="#Django-Filter" class="headerlink" title="Django Filter"></a>Django Filter</h3><p>过滤器： <code>{{ value | filter }}</code></p>
 <p>对接Markdown解析器时，Django出于安全考虑会将HTML转义，在使用markdown组件时会造成渲染的HTML无法正常显示，因此需要添加safe过滤器 <code>{{ article.body|safe }}</code>，告诉Django这段字符不需要转义。</p>
 <h3 id="CSRF-Token"><a href="#CSRF-Token" class="headerlink" title="CSRF Token"></a>CSRF Token</h3><p>所有针对内部URL的POST表单都应该使用CSRF Token模板标签，在base模板页面中添加<code>{% csrf_token %}</code>是最简洁的方法。</p>
@@ -322,7 +322,7 @@ $ docker container ls
 # 列出本机所有容器，包括终止运行的容器
 $ docker container ls --all
 
-</code></pre><p><img src="http://i1.bvimg.com/685636/e23bcbad3f2df0b7.jpg" alt=""></p>
+</code></pre><p><img src="http://0blog.test.upcdn.net/20190505211448.png" alt=""></p>
 <pre><code>
 # 终止运行
 $ docker container kill [containID]
@@ -478,7 +478,7 @@ export DOCKER_API_VERSION=1.12
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
 
 
 

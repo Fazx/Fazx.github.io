@@ -22,15 +22,15 @@
 <meta property="og:site_name" content="Cosmic Fragments">
 <meta property="og:description" content="开篇推荐：  xxelab - 一个包含php,java,python,C#等各种语言版本的XXE漏洞Demo   xxeserver - XXE Out of Band Server.">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://i1.bvimg.com/685636/8d8e4a25e56073dd.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/c7cbec2a8ac4e945.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/c68743a1a8bf4a9f.jpg">
-<meta property="og:image" content="http://i1.bvimg.com/685636/26aecf761a39265c.jpg">
-<meta property="og:updated_time" content="2019-04-30T05:45:56.865Z">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211650.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211702.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211715.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20190505211726.png">
+<meta property="og:updated_time" content="2019-05-05T13:17:37.327Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XML外部实体注入(XXE攻击)小结">
 <meta name="twitter:description" content="开篇推荐：  xxelab - 一个包含php,java,python,C#等各种语言版本的XXE漏洞Demo   xxeserver - XXE Out of Band Server.">
-<meta name="twitter:image" content="http://i1.bvimg.com/685636/8d8e4a25e56073dd.jpg">
+<meta name="twitter:image" content="http://0blog.test.upcdn.net/20190505211650.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -300,14 +300,14 @@
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>root</span><span class="token punctuation">></span></span><span class="token entity" title="&site;">&amp;site;</span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>root</span><span class="token punctuation">></span></span>
 </code></pre>
 <p>解析成功：</p>
-<p><img src="http://i1.bvimg.com/685636/8d8e4a25e56073dd.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211650.png" alt=""></p>
 <p>尝试直接读取任意文件：</p>
-<p><img src="http://i1.bvimg.com/685636/c7cbec2a8ac4e945.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211702.png" alt=""></p>
 <p>检查服务器是否支持DTD引用外部实体：</p>
-<p><img src="http://i1.bvimg.com/685636/c68743a1a8bf4a9f.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211715.png" alt=""></p>
 <p>查看<code>access.log</code>可知服务器没有获取到访问<code>index.html</code>的请求，说明DTD外部实体未被调用。</p>
 <p>根据<a href="https://xz.aliyun.com/t/2571" target="_blank" rel="noopener">https://xz.aliyun.com/t/2571</a>，XML外部实体的解析与PHP版本无关，而与编译时的libxml库有关，在我的环境里libXML的版本为2.9.1</p>
-<p><img src="http://i1.bvimg.com/685636/26aecf761a39265c.jpg" alt=""></p>
+<p><img src="http://0blog.test.upcdn.net/20190505211726.png" alt=""></p>
 <p>猜测由于查到的资料都比较老旧，新版的环境已经默认不支持DTD外部实体的引用，或做了某些限制。</p>
 <p>测试暂时失败了，不过如上的任意文件读取就是XXE漏洞最简单的利用方式。根据chybeta的文章，读取php、html等文件时由于尖括号<code>&lt;&gt;</code>会导致解析错误，可以用伪协议的方式进行base64转换：</p>
 <pre class=" language-xml"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="utf-8"?></span>
@@ -500,7 +500,7 @@ xmlData <span class="token operator">=</span> etree<span class="token punctuatio
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结-持续更新</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
 
 
 
