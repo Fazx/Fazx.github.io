@@ -15,26 +15,13 @@
 
 
 
-<meta name="description" content="‮">
-<meta property="og:type" content="article">
-<meta property="og:title" content="使用Aircrack-ng破解WPA2协议无线网络">
-<meta property="og:url" content="0sec.com.cn/2018-12-01/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cosmic Fragments">
+<meta property="og:url" content="0sec.com.cn/archives/2019/05/index.html">
 <meta property="og:site_name" content="Cosmic Fragments">
-<meta property="og:description" content="‮">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195539.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195625.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195647.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195658.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195710.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195723.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195741.png">
-<meta property="og:image" content="http://0blog.test.upcdn.net/20190505195758.png">
-<meta property="og:updated_time" content="2019-05-05T13:12:53.561Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用Aircrack-ng破解WPA2协议无线网络">
-<meta name="twitter:description" content="‮">
-<meta name="twitter:image" content="http://0blog.test.upcdn.net/20190505195539.png">
+<meta name="twitter:title" content="Cosmic Fragments">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -66,7 +53,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>使用Aircrack-ng破解WPA2协议无线网络 | Cosmic Fragments</title>
+<title>Archives: 2019/5 | Cosmic Fragments</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -76,8 +63,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: true,
-        isArchive: false,
+        isPost: false,
+        isArchive: true,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -225,190 +212,56 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-使用Aircrack-ng破解WPA2协议无线网络" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap">
   
-    <div class="article-meta">
-      <a href="/2018-12-01/" class="article-date">
-      <time datetime="2018-12-01T03:16:02.000Z" itemprop="datePublished">2018-12-01</time>
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+          <div class="article-meta">
+              <a href="/2019-05-14/" class="archive-article-date">
+      <time datetime="2019-05-14T11:23:22.000Z" itemprop="datePublished">05-14</time>
 </a>
 
 
-    </div>
+        </div>
+         
   
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      使用Aircrack-ng破解WPA2协议无线网络
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019-05-14/">Android开发实践之计算器&amp;记事助手</a>
     </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
+        <div class="article-info info-on-archive">
           
-        <p>‮<br><a id="more"></a></p>
-<p>无线网络的加密协议分为WEP，WPA与WPA2，其中WEP使用一个静态的密钥来加密所有通信，由于安全性弱已经被淘汰；而WPA使用RC4加密、TKIP进行密钥管理和更新，WPA2使用更可靠的CCMP和AES(都是密码学课讲过的)，是现在广泛使用的协议。</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195539.png" alt=""></p>
-<p>WPA/WPA2协议也并非绝对安全，比如路由器开启WPS(Wi-Fi Protected Setup)功能可以使用Reaver获取到PIN码从而获得密码：</p>
-<blockquote>
-<p><a href="https://code.google.com/archive/p/reaver-wps/wikis/README.wiki" target="_blank" rel="noopener">reaver-wps - Reaver README</a></p>
-</blockquote>
-<p>又比如去年10月份爆出的KRACK漏洞，是协议本身的缺陷：</p>
-<blockquote>
-<p><a href="https://paper.seebug.org/512/" target="_blank" rel="noopener">WPA2 “KRACK”漏洞简介与重现</a></p>
-</blockquote>
-<p>本文的攻击方法是较为简单的基于字典爆破，通过无线网卡嗅探目标网络的用于校验用户输入的握手包，使用明文密码字典碰撞握手包从而获取目标密码。</p>
-<p>命令参考&amp;可用字典在<a href="https://github.com/conwnet/wpa-dictionary" target="_blank" rel="noopener">wpa-dictionary</a>，以下正文。</p>
-<hr>
-<p>在kali下直接进行尝试时返回报错：</p>
-<pre><code>&gt; aritmon-ng
-ls: 无法访问&#39;/sys/class/ieee80211/&#39;: 没有那个文件或目录
 
-&gt; iwconfig
-lo        no wireless extensions.
-
-eth0      no wireless extensions.
-</code></pre><p>历经一番搜索得出结论，Linux如果是物理机可以直接开工，装在虚拟机里则需要额外的无线网卡，通过USB接入。</p>
-<p>于是我从百宝箱中翻出来了一个(虚了焦的)360随身WiFi：</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195625.png" alt=""></p>
-<p>不用关机直接热拔插，效果立竿见影：</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195647.png" alt=""></p>
-<p>开启无线网卡wlan0的监听模式：</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195658.png" alt=""></p>
-<p><code>airodump-ng wlan0mon</code>扫描附近无线网络：</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195710.png" alt=""></p>
-<p>选取攻击目标，参数为MAC地址、信道数以及生成cap包名，开始嗅探：</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195723.png" alt=""></p>
-<p>不要停止上一步的嗅探，在另一个shell中对连接WiFi的设备进行DOS攻击，使其断线重连，当上一步shell中出现WPA handshake时说明握手包抓取成功(仅仅看到cap包生成是不行的，有可能是个空包)：</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195741.png" alt=""></p>
-<p>使用字典爆破cap包，图中有相关涉及的所有文件。</p>
-<p><img src="http://0blog.test.upcdn.net/20190505195758.png" alt=""></p>
-<p>KEY FOUND.</p>
-
-      
+          
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/开发/">开发</a></li></ul>
     </div>
-    
-  </div>
-  
-    
 
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2018-12-22/">
-                    前端安全之CSP、同源策略与跨域请求(JSONP/CROS)
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018-11-11/">
-                    PHP博客管理系统开发全记录
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-4 i,
-        .toc-level-4 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"使用Aircrack-ng破解WPA2协议无线网络　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
-
-    
-</div>
-
-
-
-
-
-
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
+  
 
     
 
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2018-12-22/" title="上一篇: 前端安全之CSP、同源策略与跨域请求(JSONP/CROS)">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2018-11-11/" title="下一篇: PHP博客管理系统开发全记录">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019-05-14/">Android开发实践之计算器&记事助手</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-13/">用Origin请求头防御CSRF攻击(译文)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-04-07/">PHP中的随机数安全问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-03-20/">WordPress 5.1.1 CSRF to RCE 跟进分析</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-02-15/">XML外部实体注入(XXE攻击)小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019-01-26/">Django开发小记 & Docker笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-22/">前端安全之CSP、同源策略与跨域请求(JSONP/CROS)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-12-01/">使用Aircrack-ng破解WPA2协议无线网络</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-11-11/">PHP博客管理系统开发全记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-10-10/">环境配置记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-30/">区块链基础[待补充]</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-08-05/">校园网免流攻略(基于逻辑漏洞、DNS伪装包或IPv6)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-07-11/">基于Scrapy-Redis框架与Mongodb的分布式爬虫-elasticsearch搜索引擎打造</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-26/">《渗透测试实践指南》阅读笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-16/">「Web向」XCTF联赛2018年度考点知识总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-14/">「娱乐向」 Hack for Fun</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-12/">从一道取证题目谈NTFS交换数据流</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-05-10/">关于Xdebug的那些事儿</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-26/">PHP弱类型&&md5碰撞总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2018-04-24/">Hello World</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
 </div>
       <footer id="footer">
     <div class="outer">
