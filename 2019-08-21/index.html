@@ -25,9 +25,10 @@
 <meta property="og:image" content="http://0blog.test.upcdn.net/20190821175403.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20190825170930.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20190821150148.png">
+<meta property="og:image" content="http://0blog.test.upcdn.net/20200211204739.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20190823114023.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20190821173313.png">
-<meta property="og:updated_time" content="2019-08-25T09:49:28.548Z">
+<meta property="og:updated_time" content="2020-02-11T12:50:48.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入了解子域名挖掘tricks">
 <meta name="twitter:description" content="细化总结，包括DNS、证书和枚举工具的具体原理，泛解析问题的解决和对抗策略，优秀的收集和监控子域名工具推荐等。">
@@ -291,8 +292,9 @@ fer.domain=0sec.com.cn -p 53 -Pn dns30.hichina.com
 <li><a href="https://transparencyreport.google.com/https/certificates" target="_blank" rel="noopener">Google透明度报告中的证书透明度项目</a></li>
 </ul>
 <p><img src="http://0blog.test.upcdn.net/20190821150148.png" alt=""></p>
-<h3 id="证书信息"><a href="#证书信息" class="headerlink" title="证书信息"></a>证书信息</h3><p>根据我的理解，我们无法直接从浏览器证书中查看到子域名信息，从证书信息获取子域名有这两种方法：</p>
+<h3 id="证书信息"><a href="#证书信息" class="headerlink" title="证书信息"></a>证书信息</h3><p>根据我的理解，从证书信息获取子域名有三种方法：</p>
 <ul>
+<li>证书中的「使用者可选名称」字段值 <img src="http://0blog.test.upcdn.net/20200211204739.png" alt=""></li>
 <li>通过Censys这种资产搜索引擎收集的证书信息：<a href="https://censys.io/certificates?q=0sec.com.cn" target="_blank" rel="noopener">https://censys.io/certificates?q=0sec.com.cn</a></li>
 <li>向域名A记录IP的443端口发送请求，获取证书支持的域名和子域名</li>
 </ul>

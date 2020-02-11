@@ -15,21 +15,21 @@
 
 
 
-<meta name="description" content="设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单有效。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。">
+<meta name="description" content="设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单方便。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="安全相关HTTP响应头解读、配置、示例与检测">
 <meta property="og:url" content="0sec.com.cn/2020-02-09/index.html">
 <meta property="og:site_name" content="Cosmic Fragments">
-<meta property="og:description" content="设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单有效。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。">
+<meta property="og:description" content="设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单方便。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20200209173910.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20200209223115.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20200209223705.png">
 <meta property="og:image" content="http://0blog.test.upcdn.net/20200209223309.png">
-<meta property="og:updated_time" content="2020-02-09T14:39:53.426Z">
+<meta property="og:updated_time" content="2020-02-10T05:45:27.040Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="安全相关HTTP响应头解读、配置、示例与检测">
-<meta name="twitter:description" content="设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单有效。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。">
+<meta name="twitter:description" content="设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单方便。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。">
 <meta name="twitter:image" content="http://0blog.test.upcdn.net/20200209173910.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -257,7 +257,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单有效。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。<br><a id="more"></a></p>
+        <p>设置HTTP响应头是在浏览器层面上提高Web安全性的一种方法，相比代码层的变动要更简单方便。由于HTTP协议是一个可扩展的协议，这些内容也在不断地变化，本文会试着做一个较为全面的总结。<br><a id="more"></a></p>
 <p>关于众多浏览器的对响应头的支持、兼容性问题可以在<a href="https://caniuse.com/" target="_blank" rel="noopener">CANIUSE网站</a>搜索了解，示例：</p>
 <p><a href="https://caniuse.com/#feat=referrer-policy" target="_blank" rel="noopener">https://caniuse.com/#feat=referrer-policy</a></p>
 <p><img src="http://0blog.test.upcdn.net/20200209173910.png" alt=""></p>
@@ -500,7 +500,7 @@ max-age=10000;includeSubDomains
 <pre><code>Content-Security-Policy:script-src &#39;self&#39;; object-src &#39;none&#39;; style-src 1.com 2.cn; child-src https
 </code></pre><p>对应下方这张表来看，解释就是：</p>
 <blockquote>
-<p>脚本只信任当前域名；标签不加载任何资源；样式表只信任<a href="http://1.com和http://2.cn；框架(frame)必须使用HTTPS协议加载;其他资源没有限制。" target="_blank" rel="noopener">http://1.com和http://2.cn；框架(frame)必须使用HTTPS协议加载;其他资源没有限制。</a></p>
+<p>脚本只信任当前域名；标签不加载任何资源；样式表只信任<code>http://1.com</code>和<code>http://2.cn</code>；框架(frame)必须使用HTTPS协议加载;其他资源没有限制。</p>
 </blockquote>
 <table>
 <thead>
@@ -591,7 +591,7 @@ max-age=10000;includeSubDomains
 </table>
 <h2 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h2><p>以X-Frame-Options响应头为例，当然特定的语言、框架有对应的设置方法，这里举服务器配置的例子：</p>
 <h3 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h3><pre><code>Header [always] set X-Frame-Options &quot;sameorigin&quot;
-</code></pre><h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><pre><code>add_header X-Frame-Options sameorigin always;
+</code></pre><h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><pre><code>add_header X-Frame-Options sameorigin [always];
 </code></pre><h3 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a>IIS</h3><pre><code>&lt;system.webServer&gt;
   ...
 
@@ -603,8 +603,7 @@ max-age=10000;includeSubDomains
 
   ...
 &lt;/system.webServer&gt;
-</code></pre><h3 id="lighthttpd"><a href="#lighthttpd" class="headerlink" title="lighthttpd"></a>lighthttpd</h3><pre><code>setenv.add-response-header = (&quot;X-Frame-Options&quot; =&gt; 
-sameorigin&quot;,)
+</code></pre><h3 id="lighthttpd"><a href="#lighthttpd" class="headerlink" title="lighthttpd"></a>lighthttpd</h3><pre><code>setenv.add-response-header = (&quot;X-Frame-Options&quot; =&gt; sameorigin&quot;,)
 </code></pre><h2 id="配置范例"><a href="#配置范例" class="headerlink" title="配置范例"></a>配置范例</h2><p>新鲜复制的。</p>
 <h3 id="GitHub"><a href="#GitHub" class="headerlink" title="GitHub"></a>GitHub</h3><pre><code>Content-Security-Policy: default-src &#39;none&#39;; base-uri &#39;self&#39;; block-all-mixed-content; connect-src &#39;self&#39; uploads.github.com www.githubstatus.com collector.githubapp.com api.github.com www.google-analytics.com github-cloud.s3.amazonaws.com github-production-repository-file-5c1aeb.s3.amazonaws.com github-production-upload-manifest-file-7fdce7.s3.amazonaws.com github-production-user-asset-6210df.s3.amazonaws.com wss://live.github.com; font-src github.githubassets.com; form-action &#39;self&#39; github.com gist.github.com; frame-ancestors &#39;none&#39;; frame-src render.githubusercontent.com; img-src &#39;self&#39; data: github.githubassets.com identicons.github.com collector.githubapp.com github-cloud.s3.amazonaws.com *.githubusercontent.com customer-stories-feed.github.com spotlights-feed.github.com; manifest-src &#39;self&#39;; media-src &#39;none&#39;; script-src github.githubassets.com; style-src &#39;unsafe-inline&#39; github.githubassets.com
 Expect-CT: max-age=2592000, report-uri=&quot;https://api.github.com/_private/browser/errors&quot;
